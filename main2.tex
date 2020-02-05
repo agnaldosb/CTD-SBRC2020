@@ -113,7 +113,17 @@ Abstract here!!!
 
 \begin{resumo} 
 
-Texto aqui!
+Os serviços de saúde em redes (\textit{e-health}) manipulam dados sensíveis das pessoas. Logo, a disseminação desses dados deve ocorrer no momento oportuno e às entidades adequadas, pois além de garantir sua privacidade, possibilita um atendimento ágil e eficaz.
+%As tomadas de decisão acerca do 
+Controlar o
+acesso a esses dados exige
+%a avaliação da 
+avaliar
+confiança dos dispositivos, que em geral ocorre por meio de técnicas de recomendação e reputação. Entretanto, os ambientes externos às instituições de saúde muitas vezes
+%criam condições incertas e não confiáveis para 
+não suportam
+o uso dessas técnicas. Nesses ambientes, redes locais dinâmicas, associadas aos aspectos sociais das pessoas e de suas relações, contribuem para a entrega desses dados. Para lidar com essas questões, este trabalho apresenta \mbox{STEALTH}, um sistema que emprega confiança social e comunidades de interesse no controle da disseminação dos dados sensíveis das pessoas em situações emergenciais em ambientes dinâmicos. Diferente de abordagens existentes, este sistema independe do histórico de interações dos dispositivos. Simulações no NS-3 demonstram sua capacidade de assegurar essa disseminação às pessoas que possam contribuir para um atendimento eficiente. \mbox{STEALTH} oferece uma confiabilidade de disseminação de dados sensíveis de saúde de até 80\%, uma latência máxima de 166ms e 98,8\% de disponibilidade da rede em alguns casos.
+
 \begin{comment}
 
 O provimento de redes sem fio em ambientes urbanos tem permitido a construção de redes dinâmicas suportando
@@ -226,12 +236,8 @@ A Seção~\ref{sec:sistema} descreve o \mbox{STEALTH} e seu funcionamento. A Se�
 \section{STEALTH: Controle de Disseminação de Dados Pessoais Sensíveis}
 \label{sec:sistema}
 
-A composição do sistema \mbox{STEALTH}
-%é ilustrada na Figura~\ref{fig:ArquiteturaStealth}. O 
-compreende dois
-módulo: {\it Gestão de Comunidades}, responsável por criar e atualizar as comunidades de interesse estabelecidas ao longo do tempo a partir da interação entre os dispositivos das pessoas portadoras; e
-%O módulo 
-{\it Gestão de Eventos Críticos}, responsável por verificar e disseminar os dados sensíveis da pessoa em situação emergencial ao dispositivo da pessoa adequada na presença de eventos críticos. O funcionamento do sistema é descrito a seguir.
+O objetivo do sistema \mbox{STEALTH} é disseminar dados sensíveis pessoais no momento oportuno e de maneira controlada às pessoas adequadas, isto é, aquelas fisicamente próximas ao evento emergencial e com interesse em saúde. O sistema estabelece redes locais dinâmicas sem fio, que suportam a formação de comunidades pelo agrupamento dos dispositivos por meio de aspectos sociais das pessoas e de suas relações sociais, conforme ilustra a Figura~\ref{fig:modeloRede}. Esses aspectos são empregados para avaliar a confiança dos dispositivos no momento que eles interagem entre si. As abordagens comumente encontradas na literatura para avaliar a confiança dos dispositivos, tais como as técnicas de reputação e recomendação, dependem do histórico de interações. Em contrapartida, o STEALTH leva em conta as informações que os dispositivos possuem no momento da interação para avaliar sua confiança. Esse comportamento o torna adequado para atuar em condições~\textit{Zero-Knowledge}~\cite{feige1988zero,kim2015hcs}).
+
 
 \begin{comment}
 
@@ -244,16 +250,86 @@ módulo: {\it Gestão de Comunidades}, responsável por criar e atualizar as com
 
 \end{comment}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/ModeloRede.pdf}
+\caption{Modelo de Rede}
+\label{fig:modeloRede}
+\end{figure}
 
-Os nós da rede iniciam sua operação de forma isolada e, na medida em que se movimentam, encontram outros nós e estabelecem comunidades de interesse. Periodicamente, cada nó inicializa sua lista de vizinhos, anuncia sua presença por mensagens de anúncios em \textit{broadcast} à procura de nós vizinhos e aguarda um intervalo de tempo até um novo anúncio.  Quando um nó vizinho percebe que um nó anuncia a sua presença, encaminha a este nó anunciador uma mensagem de identificação, composta pela seu \textit{Id}, competência e interesses. O nó anunciador, ao receber essa mensagem do nó vizinho, verifica a existência de interesse em comum em saúde entre eles. Quando há esse interesse em comum, ele mede a confiança do nó vizinho e o insere na sua lista de vizinhos, dentro da sua comunidade de saúde. Essa medição leva em conta a confiança do nó vizinho acerca da sua competência e dos interesses em comum que eles possuem.
+O \mbox{STEALTH} é composto de dois módulos: {\it Gestão de Comunidades}, responsável por criar e atualizar as comunidades de interesse estabelecidas ao longo do tempo a partir da interação entre os dispositivos das pessoas portadoras; e {\it Gestão de Eventos Críticos}, responsável por verificar e disseminar os dados sensíveis da pessoa em situação emergencial ao dispositivo da pessoa adequada na presença de eventos críticos. A descrição detalhada desses módulos e algorítimos que descrevem seu funcionamento encontram-se na dissertação. 
 
-Na presença de situações emergenciais de saúde, os nós pertencentes às CoI formadas com interesse em saúde apoiam os nós que representam as pessoas em situação emergencial. Desta forma, ao ocorrer um evento crítico com um determinado nó, ele verifica o nó vizinho com a confiança mais elevada e obtém o dado sensível apropriado. Em seguida, envia uma mensagem de alerta para o nó selecionado com seu dado sensível. Além disso, ele anuncia por \textit{broadcast} a interrupção de sua operação. Ao receber uma mensagem de alerta, o nó confirma seu recebimento. Quando um nó percebe que outro nó anuncia a interrupção de sua operação, ele exclui esse nó da sua lista de vizinhos. Isso impede que um nó em situação emergencial venha a ser selecionado para receber dados sensíveis de outros nós.
+O funcionamento do sistema inicia com os nós da rede operando de forma isolada e, na medida em que se movimentam, encontram outros nós e estabelecem comunidades de interesse. Periodicamente, cada nó inicializa sua lista de vizinhos, anuncia sua presença por mensagens de anúncios em \textit{broadcast} à procura de nós vizinhos e aguarda um intervalo de tempo até um novo anúncio.  Quando um nó vizinho percebe que um nó anuncia a sua presença, encaminha a este nó anunciador uma mensagem de identificação, composta pela seu \textit{Id}, competência e interesses. O nó anunciador, ao receber essa mensagem do nó vizinho, verifica a existência de interesse em comum em saúde entre eles. Quando há esse interesse em comum, ele mede a confiança do nó vizinho e o insere na sua lista de vizinhos, dentro da sua comunidade de saúde. A partir da confiança do nó vizinho acerca dos interesses em comum que eles possuem~(Eq.~\ref{eq:communityTrust}) e da sua competência~(Eq.~\ref{eq:SkillTrust}), obtém-se a confiança total do nó~(Eq.~\ref{eq:totalTrust}). Essas equações encontram-se detalhadas na dissertação.
 
+\noindent
+\begin{minipage}{.3\linewidth}
+\centering
+\begin{equation}
+T_{xy}^{I} = \frac {|I_x \cap I_y|}{|I_x|}
+\label{eq:communityTrust}
+\end{equation}
+%\hspace{0.5cm}
+\end{minipage}
+\begin{minipage}{.3\linewidth}
+\centering
+\begin{equation}
+T_{xy}^{Skill} = Sim_y
+\label{eq:SkillTrust}
+\end{equation}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}{.3\linewidth}
+\centering
+\begin{equation}
+T_{xy} = \frac{T_{xy}^{I} + T_{xy}^{Skill}}{2}
+\label{eq:totalTrust}
+\end{equation}
+\end{minipage}
+
+Na presença de situações emergenciais de saúde, os nós pertencentes às CoI formadas com interesse em saúde apoiam os nós que representam as pessoas em situação emergencial. Desta forma, ao ocorrer um evento crítico com um determinado nó, ele verifica o nó vizinho com a confiança mais elevada e obtém o dado sensível apropriado. Em seguida, envia uma mensagem de alerta para o nó selecionado com seu dado sensível. Além disso, ele anuncia por \textit{broadcast} a interrupção de sua operação. Ao receber uma mensagem de alerta, o nó confirma seu recebimento. Quando um nó percebe que outro nó anuncia a interrupção de sua operação, ele exclui esse nó da sua lista de vizinhos. Isso impede que um nó em situação emergencial venha a ser selecionado para receber dados sensíveis de outros nós. 
+
+\subsection{Funcionamento}
+
+Esta seção ilustra o funcionamento do sistema \mbox{STEALTH} em um ambiente urbano e demonstra sua contribuição na disseminação controlada dos dados sensíveis de uma pessoa em situação emergencial, a fim de que ela possa receber um primeiro atendimento. \rev{Considere uma área urbana onde seis pessoas deslocam-se a pé pelas ruas: uma enfermeira, um paciente, um executivo, um policial, um bombeiro e um médico. Cada uma delas possui uma profissão ou habilidade para executar determinadas tarefas no seu dia-a-dia. O paciente é uma pessoa que eventualmente precisa de atendimento emergencial. O médicos são profissionais que detém o maior conhecimento em saúde, enquanto um policial, por exemplo, possui condições de prestar primeiros socorros.}
+
+\rev{Todas essas pessoas} possuem um interesse em comum em saúde e não mantêm relações entre si. A enfermeira, o policial, o bombeiro e o médico possuem interesse em saúde por conta da sua profissão. O executivo se interessa por saúde, por exemplo, a fim de ajudar pessoas necessitadas. As pessoas portam dispositivos móvel, \textit{smartphones}, para se conectarem em redes. O \mbox{STEALTH} roda nesses \textit{smartphones}, estando configurado para operar. Além disso, o paciente porta um dispositivo junto ao seu corpo para verificar sua pressão arterial, por exemplo, e reportar a um aplicativo instalado em seu \textit{smartphone}. Esse aplicativo comunica-se com o \mbox{STEALTH} para informar os valores de pressão arterial medidos e sua normalidade para esse paciente.
+
+
+\begin{table}[!htb]
+	\begin{minipage}[t]{0.5\linewidth}
+		\includegraphics[width=0.95\textwidth]{figures/interacoes_t6.pdf}
+		\captionof{figure}{Interações no tempo}
+		\label{fig:interacoesnotempo}
+	\end{minipage}
+	\begin{minipage}[b]{0.5\linewidth}
+		\centering
+		\includegraphics[width=.3\textwidth]{figures/Grafo6.pdf}
+		\vspace{-0.2cm}
+		\captionof{figure}{Grafo da rede em $t_6$}
+	    \label{fig:grafo6}
+	    \relsize{-2.0}
+	    \captionof{table}{Medição da confiança}
+        \label{tab:exemploConfianca2}
+        {
+            \begin{tabular}{|l|ccc|}
+            \hlineB{2}
+            \multirow{2}{*}{\textbf{Confiança}}&\multicolumn{3}{c|}{\textbf{Competência}}  \bigstrut \\ \cline{2-4} 
+            &Médico&Enfermeira&Policial  \bigstrut \\ \hline
+            \textbf{$T^{Skill}$}&1&0,33&0,28  \bigstrut \\
+            \textbf{$T^{CoI}$}&1&1&1  \bigstrut \\
+            \textbf{$T$}&1&0,66&0,64  \bigstrut \\
+            \hlineB{2}
+            \end{tabular}
+        }
+	\end{minipage}\hfill
+\end{table}
+
+As interações entre pessoas ao longo do tempo $t = \{1,2,...,8\}$, resultantes da sua mobilidade, são ilustradas na Figura \ref{fig:interacoesnotempo}, quando seus dispositivos estabelecem redes \textit{ad hoc} para trocarem dados entre si. Assume-se que o paciente entra em situação emergencial em $t_6$. Nesse instante, o seu dispositivo interage com os de outras pessoas, como ilustra o grafo $G_6$ (Figura \ref{fig:grafo6}), e cada um deles forma sua própria comunidade de saúde. O dispositivo do paciente mede a confiança dos demais e os insere na sua lista de vizinhos com os valores de confiança exibidos na  Tabela~\ref{tab:exemploConfianca2}. Ao ocorrer o evento crítico, \rev{o STEALTH rodando no \textit{smartphone} do} paciente identifica o médico como a pessoa com o maior valor de confiança na sua comunidade de saúde e, assim, dissemina seus dados sensíveis a ele.
 
 \section{Avaliação do STEALTH}
 \label{sec:aval}
 
-O sistema \mbox{STEALTH} foi implementado e simulado no simulador NS-3, versão 3.28. Todos os resultados correspondem à média de 35 simulações, com intervalo de confiança de 95\%. A Tabela~\ref{tab:parametros} resume os principais parâmetros empregados nas simulações. A análise da disponibilidade dos dados provida pelo \mbox{STEALTH} levou em conta a evolução das comunidades de interesse em saúde ao longo do tempo e a métrica $N_{C}$. A análise da confiabilidade é mensurada através das métricas $TS$, $TN_a$, $MTA$ e $TS_{Skill}$. A Tabela~\ref{tab:metricas} descreve as 
+O sistema \mbox{STEALTH} foi implementado e simulado no simulador NS-3, versão 3.28. Todos os resultados correspondem à média de 35 simulações, com intervalo de confiança de 95\%. A Tabela~\ref{tab:parametros} sintetiza os principais parâmetros empregados nas simulações. A análise da disponibilidade dos dados provida pelo \mbox{STEALTH} levou em conta a evolução das comunidades de interesse em saúde ao longo do tempo e a métrica $N_{C}$. A análise da confiabilidade é mensurada através das métricas $TS$, $TN_a$, $MTA$ e $TS_{Skill}$. A Tabela~\ref{tab:metricas} descreve as 
 %fórmulas das 
 métricas utilizadas, que se encontram detalhadas na dissertação.
 
@@ -275,8 +351,6 @@ Velocidade dos nós & 0,5m/s e 2,0m/s && \\
 \end{table}
 
 %, instalado no sistema operacional Debian, versão 9.1. O cenário de uso do \mbox{STEALTH} é composto por 100 dispositivos (nós) móveis representando o comportamento de movimentação de usuários em um ambiente urbano. Esses usuários portam equipamentos sem fio - \textit{smartphones} - e deslocam-se em uma área de 400m x 430m da Cidade de Estocolmo (Suécia) com velocidades entre 0,5m/s e 2,0m/s~\cite{helgason2014opportunistic}. Os nós estabelecem redes \textit{ad hoc} através de transmissão usando o padrão IEEE 802.11a e o protocolo de transporte UDP. O raio de alcance dos nós é de 50m, para permitir a \rev{formação de comunidades} de interesses ao seu redor e na medida em que se movimentam. Além disso, eles são configurados randomicamente com aspectos sociais, isto é, a cada rodada de simulação eles possuem uma única competência e um conjunto de interesses, com um mínimo de um e máximo cinco interesses. A Tabela~\ref{tab:aspectosAtribuidos} lista a distribuição dos aspectos. A classe \textit{node} do NS-3 foi modificada para incorporar os atributos sociais de confiança aos nós.
-
-Os nós da rede foram configurados randomicamente com aspectos sociais, isto é, a cada rodada de simulação eles possuíam uma única competência e um conjunto de interesses, com um mínimo de um e máximo cinco interesses. A Tabela~\ref{tab:aspectosAtribuidos} lista a distribuição dos aspectos. 
 
 
 \begin{table}[H]
@@ -302,6 +376,7 @@ $MTA$ & $\mathlarger{\sum}\limits_{i\;=\;1}^{N_S} \; \dfrac{ ta_i - td_i}{N_S}$ 
 }
 \end{table}
 
+Os nós da rede foram configurados randomicamente com aspectos sociais, isto é, a cada rodada de simulação eles possuíam uma única competência e um conjunto de interesses, com um mínimo de um e máximo cinco interesses. A Tabela~\ref{tab:aspectosAtribuidos} lista a distribuição dos aspectos. 
 
 \begin{table}[H]
 \setlength{\extrarowheight}{2.0pt}
@@ -350,15 +425,22 @@ $MTA$ & $\mathlarger{\sum}\limits_{i\;=\;1}^{N_S} \; \dfrac{ ta_i - td_i}{N_S}$ 
 
 
 
-A avaliação do comportamento do sistema foi realizada através de três nós - 37, 52 e 70. Para isso, eles receberam a mesma configuração cada um em todas as repetições de simulações e
+A avaliação do comportamento do sistema foi realizada através de três nós - 37, 52 e 70.
+%Para isso, eles 
+%Eles
+%receberam 
+Cada um desses nós recebeu
+a mesma configuração
+%cada um 
+em todas as repetições de simulações e
 %, enquanto os demais nós foram configurados randomicamente a cada rodada de simulação. 
-entraram em situação emergencial aos 890s.
+entrou em situação emergencial aos 890s.
 %de simulação.
 %, permitindo observar seus comportamentos em grande parte da simulação. 
 Assumiu-se que todos os nós apresentam um comportamento honesto
 e há mecanismos de segurança para validação das suas identidades e proteção na transmissão dos dados. \rev{Assume-se, também, que a identificação de um evento crítico 
 acontece 
-por um dispositivo que as pessoas 
+por meio de um dispositivo que as pessoas 
 portam 
 junto ao seu corpo, e que informa ao \mbox{STEALTH}.}
 %Os resultados exibidos correspondem à média de 35 simulações e um intervalo de confiança de~95\%.
@@ -402,7 +484,7 @@ existia vizinhos na sua comunidade de saúde para os quais pudesse disseminar se
 \centering
 \includegraphics[width=0.9\textwidth]{figures/neighs_cois_v2_890s_stack_3.pdf}
 \vspace{-0.2cm}
-\caption{Dinamicidade da comunidade de saúde e tamanho ao longo do tempo}
+\caption{Dinamicidade e tamanho da comunidade de saúde ao longo do tempo}
 \label{fig:neighs_x_cois}
 \end{figure}
 

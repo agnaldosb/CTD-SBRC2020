@@ -27,3 +27,60 @@ A interação entre dispositivos computacionais móveis e as pessoas tem sido in
 Atualmente, há  diversas plataformas para interação social das pessoas, onde aspectos das suas relações são observados e empregados no controle das trocas de dados. Muitas dessas plataformas online potencializam a distribuição de informações, causam vazamentos de dados e comprometem sua segurança, como aconteceu com o Facebook ~\cite{FacebookLeakage}. Logo, um serviço seguro (\textit{safety}) de disseminação de dados em redes entrega os dados às pessoas corretas e evita vazamentos~\cite{lima2009survey}. Embora diversos trabalhos na literatura tratem essa segurança em redes não estruturadas nos contextos de IoT~\cite{al2017trust,bao2013scalable}, MANETs~\cite{mannes2012quorum} e P2P~\cite{vasilomanolakis2017trust},  as soluções geralmente se destinam a ambientes centralizados \rev{e necessitam conhecer as} interações anteriores para a tomada de decisões no manuseio dos dados. Poucas pesquisas voltam-se aos ambientes onde interações anteriores são desconhecidas (\textit{Zero-Knowledge}~\cite{feige1988zero}), nos quais há informações apenas de interações atuais. Dessa forma, essas soluções não são adequadas aos ambientes urbanos  \rev{dinâmicos} e esparsos, pois consideram \rev{a existência prévia de} uma infraestrutura de rede %sempre disponível para atender à disseminação de dados. 
 
 O controle da disseminação dos dados em redes pretende garantir a entrega de dados às entidades corretas e no tempo adequado. Alguns trabalhos encontrados na literatura empregam confiança como critério para esse controle~\cite{al2017trust}. \rev{Entende-se por confiança como a vontade de uma pessoa de arriscar-se, baseada numa crença subjetiva de que aquele em quem ela confia exibirá um comportamento confiável. A confiança social provém das relações entre essas pessoas no ambiente das redes sociais.~\cite{cho2015survey}} e é empregada para agrupar nós da rede, estabelecendo comunidades de interesse baseadas em aspectos sociais dos proprietários dos dispositivos de rede e de suas relações~\cite{bao2013scalable}. Embora adequados às redes não estruturadas, esses trabalhos empregam reputação e recomendação para avaliar a confiança, que são técnicas dependentes de informações relativas às interações passadas entre os dispositivos. 
+
+%\noindent
+\begin{minipage}{.3\linewidth}
+\centering
+\begin{equation}
+T_{xy}^{I} = \frac {|I_x \cap I_y|}{|I_x|}
+\label{eq:communityTrust}
+\end{equation}
+\end{minipage}
+% Valores possíveis 
+\begin{comment}
+\quad
+\begin{minipage}{.7\linewidth}
+\begin{equation}
+\footnotesize
+T_{xy}^{I} = \left \{
+\begin{array}{cl} 
+\rev{0}, & se  \; \; I_y \not\supset \{sa\Acute{u}de\} \\
+]0,1[,	& se \; \; I_x \cap I_y \neq 0 \; \; e \; \; I_x \neq I_y \; e \; \{sa\Acute{u}de\} \subset I_x \cap I_y\\
+1, 	& se \; \; I_x = I_y \; \; e \; \; \{sa\Acute{u}de\} \subset I_x \cap I_y
+\end{array}
+\right.
+\label{eq:valuesTCoI}
+\end{equation}
+\end{minipage}
+\end{comment}
+%próxima equação
+\begin{minipage}{.3\linewidth}
+\centering
+\begin{equation}
+T_{xy}^{Skill} = Sim_y
+\label{eq:SkillTrust}
+\end{equation}
+\end{minipage}
+\begin{comment}
+\vspace{0.4cm}
+\quad
+\begin{minipage}{.7\linewidth}
+\begin{equation}
+T_{xy}^{Skill} = \left \{
+\begin{array}{cl} 
+0,	& se \; s_y \; \in \{outras\} \\
+]0,1[,	& se \; s_y \; \notin \{outras, m\Acute{e}dico\} \\
+1, 	& se \; s_y \; \in \{m\Acute{e}dico\}
+\end{array}
+\right.
+\label{eq:valuesTSkill}
+\end{equation}
+\end{minipage}
+\end{comment}
+\begin{minipage}{.3\linewidth}
+\centering
+\begin{equation}
+T_{xy} = \frac{T_{xy}^{I} + T_{xy}^{Skill}}{2}
+\label{eq:totalTrust}
+\end{equation}
+\end{minipage}
