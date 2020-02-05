@@ -1,0 +1,1179 @@
+\documentclass[12pt]{article}
+
+\usepackage{scrextend}
+\usepackage{sbc-template}
+\usepackage{mathtools}
+\usepackage{subfigure}
+\usepackage{wrapfig}
+\usepackage{graphicx,url}
+\usepackage{booktabs}
+\usepackage[brazil]{babel}   
+\usepackage[utf8]{inputenc}
+\usepackage{hhline}
+\usepackage{enumitem, array}
+\usepackage{boldline}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage[T1]{fontenc} % hifenizar as palavras
+
+\newcommand{\mn}[1]{\textcolor{red}{\bf [Michele]: #1}}
+
+% algoritmo - pacote 9/out/2017
+\usepackage[portuguese,ruled,noline,linesnumbered]{algorithm2e}
+
+\let\oldnl\nl% Store \nl in \oldnl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one line
+
+%% Useful packages
+\usepackage{mathtools}
+\usepackage{graphicx}
+\setlength{\marginparwidth}{2cm}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{multirow}
+\usepackage{bigstrut}
+
+\definecolor{ao(english)}{rgb}{0.0, 0.5, 0.0}
+
+\renewcommand\thesubfigure{(\alph{subfigure})}
+
+\newcommand{\notered}[1]{\textcolor{red}{{#1}}}
+\newcommand{\noteblue}[1]{\textcolor{blue}{{\bf #1}}}
+\newcommand{\as}[1]{\textcolor{blue}{{\bf #1}}}
+\newcommand{\al}[1]{\textcolor{brown}{{\bf #1}}}
+\newcommand{\noteMat}[1]{\textcolor{cyan}{{\bf #1}}}
+\newcommand{\noteGreen}[1]{\textcolor{green}{{\bf #1}}}
+\newcommand{\sep}{\hspace{8 mm}}
+\newcommand{\pl}[1]{{\color{red}{[#1]}}}
+\newcommand{\mnr}[1]{{\color{blue}{[Necessário corrigir/revisar:  #1]}}}
+\newcommand{\co}[1]{{\color{magenta}{[Comentário:  #1]}}}
+\newcommand{\mnc}[1]{{\color{brown}{[Comentário:  #1]}}}
+\newcommand{\mic}[1]{\textcolor{magenta}{{\bf #1}}}
+
+\newcommand{\agn}[1]{\textcolor{ao(english)}{{#1}}}
+%\newcommand{\agn}[1]{\textcolor{black}{{#1}}}
+
+\newcommand{\rev}[1]{\textcolor{black}{{#1}}}
+%\newcommand{\rev}[1]{\textcolor{red}{{#1}}}
+
+\usepackage{indentfirst}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\sloppy
+
+\usepackage{array}
+\usepackage{threeparttable}
+\usepackage{listings}
+
+%\title{Gerenciamento de Múltiplos Eventos Críticos de Saúde Suportado em Redes Sociais Dinâmicas de Interesses
+%\title{Tratamento de Múltiplos Eventos Críticos de Saúde Suportado em Redes Sociais Dinâmicas de Interesses
+%\title{Coordenação de Múltiplos Eventos Críticos de Saúde Suportada em Redes Sociais Dinâmicas de Interesses
+\title{
+%Atendimento
+%Lidando com 
+%Resposta para 
+Coordenação de 
+%Tomada de Decisão Sobre 
+%de 
+Múltiplos Eventos Críticos de Saúde \\ 
+%em Ambientes Não Hospitalar 
+%Suportados
+%Sob 
+Por 
+%através de
+%em 
+Redes 
+Dinâmicas 
+%Sociais 
+%Dinâmicas 
+de Interesses
+Sociais}
+%\title{Tomada de Decisão sobre Múltiplos Eventos Críticos de Saúde Suportada em Redes Sociais Dinâmicas de Interesses}
+
+
+\author{Agnaldo Batista\inst{1}, Giovanni da Silva\inst{1}, Michele Nogueira\inst{1}, Aldri Santos\inst{1}} 
+\address{Núcleo de Redes Sem-Fio e Redes Avançadas (NR2) -- UFPR %-- Curitiba -- PR -- Brasil 
+%\\
+%\\ Universidade Federal do Paraná (UFPR)\\
+%Caixa Postal 19.081 -- 81.531-980 -- Curitiba -- PR -- Brasil
+\email{\{asbatista,grs14,michele,aldri\}@inf.ufpr.br}
+}
+
+
+% adicionado por Aldri para fazer marcação d'agua de no. de versão do documento
+\usepackage{xcolor}
+\usepackage{xwatermark} 
+\usepackage[export]{adjustbox}
+%\newwatermark*[allpages,angle=60,scale=2,color=red!30,xpos=-10pt,ypos=10pt]{Rascunho}
+%\newwatermark[allpages,scale=8,angle=60,xpos=-1.5cm,ypos=1cm]{\LaTeX}
+%\newwatermark[allpages,scale=2,angle=60,xpos=-1.5cm,ypos=1cm]{Draft SBRC 2019}
+
+% adicionado por Aldri para inclusão de comentários de pontos a ser melhorados ao longo do documento
+%\newcommand{\notered}[1]{\textcolor{red}{[{\bf #1}]}}
+%\newcommand{\noteblue}[1]{\textcolor{blue}{{\bf #1}}}
+% adicionado por aldri
+%\usepackage[inline]{trackchanges}
+%\addeditor{FM}
+%\addeditor{AS}
+%\addeditor{JS}
+%%\note[FM]{}
+
+\usepackage{float}
+
+\begin{document} 
+%\pagestyle{myheadings} % numerar páginas
+\maketitle
+
+%\begin{abstract}
+%Urban environments are prone to multiple events in various domains, such as public security, transportation, and health, among others. Proper attendance of these events depends on coordinated dissemination to appropriate entities at a suitable time. In healthcare, structured environments such as hospitals, for example, adequately support the dissemination of critical events. However, the absence of network infrastructure outside these environments makes them critical to deal with critical events, compromising citizens' quality of life. Under these conditions, clustering devices through their owners' social interests in dynamic networks serve as alternative network infrastructure. This infrastructure allows the coordination of multiple events in dynamic environments, contributing to its attendance. This article modifies \mbox{STEALTH}, a system previously developed to support the care of multiple critical health events. It establishes dynamic networks where devices handle events in a distributed manner by grouping devices into communities. Modified STEALTH exceeded 94\% of reliability in critical event dissemination and a maximum latency of 166ms, while availability to support critical event dissemination reached 100\%.
+%\end{abstract}
+
+
+\begin{resumo} 
+
+Resumo aqui!!!
+
+%O atendimento apropriado de múltiplos eventos urbanos críticos depende de uma disseminação coordenada às entidades adequadas e no momento oportuno. Na área de saúde, ambientes estruturados como hospitais, por exemplo, suportam adequadamente a disseminação dos eventos críticos. Contudo, tratar esses eventos é um desafio fora desses ambientes, pois a falta de infraestrutura de rede compromete o serviço. Este artigo apresenta o sistema \mbox{C-STEALTH} para atender eventos críticos de saúde de maneira distribuída, mediante o agrupamento de dispositivos em comunidades através de redes dinâmicas. Essas estratégias oferecem um serviço resiliente à mobilidade das pessoas e às falhas de comunicação, confiabilidade na disseminação dos dados e redução da latência na sua entrega. Simulações no NS-3 mostram que \mbox{C-STEALTH} oferece uma confiabilidade de disseminação de eventos superior a 94\% com uma latência de até 166ms e 100\% de disponibilidade da rede em alguns casos. enquanto a disponibilidade para suportar a disseminação de eventos críticos atingiu 100\%.
+
+\end{resumo}
+
+
+\section{Introdução} 
+\label{sec:intro}
+
+\begin{comment}
+
+1 par. contexto da computação para a sociedade (tecnologia existentes, domínios de aplicações, benefícios à  sociedade)\\
+1 par. motivação do Serviço  (escopo técnico - protocolo, serviço) \\
+1 par. técnicas existentes na literatura e suas limitações  \\
+1 par. sobre formas que poderiam ser aplicadas \\
+1 par. Proposta e forma de avaliação  \\
+1 par. Estrutura do artigo  \\
+\notered{Favor não apagar a estrutura de parágrafos acima. Ela pode ser comentada}
+\end{comment}
+
+\begin{comment}
+\begin{addmargin}[1.3cm]{1cm}
+\textcolor{red}{- \textbf{$1^o$ parágrafo}: Contexto da computação para a sociedade (tecnologia existentes, domínios de aplicações, benefícios à  sociedade)}
+\end{addmargin}
+\end{comment}
+
+Atualmente, os serviços computacionais auxiliam na execução de muitas atividades no dia-a-dia das pessoas, contribuindo para a melhoria de sua qualidade de vida, além de outros benefícios. As tecnologias de comunicação de dados permitem às pessoas se manterem conectadas em redes continuamente, destacando-se aquelas voltadas à comunicação sem fio como a telefonia móvel (3G e 4G), o \textit{bluetooth} e o WiFi~\cite{aloi2017enabling}. Elas favorecem a mobilidade das pessoas, sendo aplicadas em diversos domínios, tais como saúde, transportes, segurança pública, entre outros~\cite{gharaibeh2017smart}. 
+%
+A garantia de mobilidade e a conexão continua viabilizam diversos serviços em redes na área de saúde, tais como agendar consultas e obter resultados de exames, entre outros. Eles possibilitam a monitoração contínua, diagnóstico médico e avaliação do desempenho físico humano~\cite{movassaghi2014wireless,health2013thailand}. O acompanhamento remoto do estado de pacientes vem recebendo muita atenção~\cite{gharaibeh2017smart}. Contudo, em ambientes urbanos e esparsos não construídos para atender serviços de saúde, a falta de infraestrutura de rede inviabiliza o uso desses serviços.
+
+%\textcolor{red}{- \textbf{$2^o$ parágrafo}: Motivação do Serviço  (escopo técnico - protocolo, serviço)}
+
+Vários serviços disponibilizados em ambientes urbanos automaticamente demandam criar e manter redes locais ou globais, estabelecidas dinamicamente.
+%, a fim de garantir o seu funcionamento. 
+Serviços de saúde, por exemplo, são preservados através dessa infraestrutura, inclusive na presença de catástrofes. Nesse contexto, o tratamento de
+eventos
+%aproveita-se 
+apoia-se
+%da 
+na
+conexão contínua das pessoas em redes. Eles acontecem de maneira isolada ou concorrente, demandando ações para seu correto tratamento~\cite{baldoni2011data}, especialmente diante da dinamicidade da rede.
+Eventos são
+%Por eventos entende-se 
+mudanças inesperadas, anormalidades ou falhas que alteram o estado esperado de um sistema.
+%~\cite{kolios2016data}.
+Em um sistema distribuído, por exemplo, as trocas de mensagens são consideradas eventos, enquanto que
+%~\cite{lamport1978time}. 
+para as pessoas, alterações nas suas condições normais de saúde caracterizam-se como eventos críticos. 
+Logo, a coordenação de topologias de redes dinâmicas para suportar múltiplos eventos críticos em ambientes urbanos torna-se natural. Nos últimos anos, o uso massivo de \textit{smartphones}, associado ao avanço das suas tecnologias de rede, tem proporcionado o estabelecimento de redes dinâmicas nesses locais, além do
+%e proporcionando o 
+surgimento de novas estratégias para lidar com eventos.
+
+%\textcolor{red}{- \textbf{$3^o$ parágrafo}: Técnicas existentes na literatura e suas limitações}
+
+A literatura apresenta diversas técnicas para lidar com eventos em ambientes urbanos. Contudo, geralmente empregam infraestruturas de redes previamente existentes, tais como WiFi e telefonia móvel. Eventos catastróficos como tempestades, terremotos, entre outros, impactam o funcionamento dos serviços~\cite{timashev2017resilient}, muitas vezes interrompendo-os. Em geral, o gerenciamento de eventos nesses ambientes trata
+%eventos específicos, tais como 
+situações específicas, tais como
+transporte público~\cite{kolios2016data}, de atendimentos de emergências~\cite{rivero2018secure}, de acessos à áreas de segurança~\cite{india2015}. Eles disseminam imagens, situações emergenciais e localização, entre outras informações. Contudo, são abordagens centralizadas e demandam infraestruturas de redes robustas e dispositivos específicos para o gerenciamento de eventos. 
+%
+As redes dinâmicas
+%contribuem para a disponibilização de 
+viabilizam
+serviços em ambientes urbanos ao permitirem a comunicação direta entre dispositivos. Nelas, os nós e conexões mudam ao longo do tempo, aparecendo e desaparecendo a qualquer momento
+%, entre outras alterações
+~\cite{marquez2019overlapping}. Elas englobam as redes ad hoc
+oportunísticas, cujas 
+%, estabelecidas de maneira ad hoc.
+%, onde nós trocam mensagens diretamente. 
+%As 
+mensagens recebidas são armazenadas ou transportadas até serem encaminhadas a outros nós, 
+onde apoiam as
+%quando 
+%são usadas nas 
+tomadas de decisões~\cite{borrego2019efficient}. Essa disseminação de dados possibilita lidar com eventos
+%que são disseminados 
+na~rede.
+
+
+%\textcolor{red}{- \textbf{$5^o$ parágrafo}: Proposta e forma de avaliação}
+
+%Este trabalho apresenta um sistema para trata eventos críticos concorrentes de saúde em ambientes urbanos para
+
+%\as{Precisamos ajustar o parágrafo abaixo para ficar claro ao leitor, bem como o abstract. conversa por skype}.
+
+Este trabalho apresenta 
+\mbox{C-STEALTH} (\textit{\textbf{C}oncurrent - \textbf{S}ocial \textbf{T}rust-Based H\textbf{EALTH} \mbox{Information Dissemination Control)}}, um sistema para 
+%baseado no \mbox{STEALTH}~\cite{batista2019sbseg}. Ele 
+tratar eventos críticos de saúde concorrentes
+%.} O \mbox{C-STEALTH} é baseado 
+em ambientes urbanos para
+%em redes dinâmicas para 
+suportar o seu gerenciamento e disseminação
+%desses eventos
+%de criticos de saúde 
+%em ambiente urbano. 
+por redes dinâmicas.
+Nesta nova abordagem, 
+diante
+%na presença 
+de eventos de dispositivos próximos, cada dispositivo com o \mbox{C-STEALTH} instalado coordenará para
+%que a disseminação de seu evento seja feita 
+disseminar seu evento
+a outro dispositivo próximo. Essa coordenação acontece através das mensagens trocadas entre os dispositivos durante os eventos críticos e observa as condições de saúde de seus proprietários,
+%dos dispositivos, 
+de modo que os eventos sejam disseminados somente às pessoas aptas para atendê-los. 
+Além disso,
+%Adicionalmente, 
+essa disseminação depende da manutenção contínua da rede, a fim de permitir a verificação de dispositivos próximos. O \mbox{C-STEALTH} foi avaliado no simulador NS-3 para analisar sua robustez na manutenção de redes dinâmicas para suportar a coordenação da disseminação de múltiplos de eventos críticos em situações emergenciais. Os resultados promissores mostram que a confiabilidade do \mbox{C-STEALTH} na disseminação de eventos críticos superou 94\% com uma latência máxima de 166mse e disponibilidade da rede de 100\% em alguns casos.
+
+%\textcolor{red}{- \textbf{$6^o$ parágrafo}: Estrutura do artigo}
+
+Este artigo está organizado da seguinte forma: a Seção~\ref{sec:trabRel} apresenta os trabalhos relacionados. A Seção~\ref{sec:sistema} descreve o C-STEALTH e detalha o funcionamento dos seus módulos e componentes. A Seção~\ref{sec:aval} detalha a avaliação e os resultados obtidos. A Seção~\ref{sec:conc} apresenta a conclusão e os trabalhos futuros.
+
+
+\section{Trabalhos Relacionados}
+\label{sec:trabRel}
+
+Recentemente %A 
+a literatura
+%aborda o tratamento de eventos em redes em diversos trabalhos. Eles propõem 
+tem apresentado algumas 
+soluções para identificar e tratar eventos em domínios de aplicação como segurança pública, transporte urbano, saúde, entre outros. No domínio de saúde, por exemplo, destaca-se a monitoração remota da saúde das pessoas. Os autores buscam difundir as alterações nessas condições com baixa latência e às entidades adequadas. Há soluções para redes de sensores sem fio (WSN)~\cite{boukerche2004fast,wu2016dynamic}, Internet das Coisas (IoT)~\cite{dar2015resource}, redes pessoais (PAN)~\cite{blount2007remote}, WSN e redes corporais (WBAN)~\cite{souil2011qos} e redes ad hoc~\cite{nittel2012localalert, batista2019sbseg}, entre outras. Embora a mobilidade dos dispositivos seja considerada, soluções 
+%baseadas %para 
+em 
+redes dinâmicas, que 
+%apoiam
+suportam 
+redes complexas, ainda são~incipientes.
+
+%O monitoramento da saúde das pessoas emprega WSN, através de sensores instalados junto ao seu corpo e no ambiente onde se encontram.
+\cite{wu2016dynamic} propuseram um \textit{framework} com um protocolo de colaboração dinâmico para WSN, a fim de detectar eventos de saúde em redes dinâmicas. Os 
+sensores 
+%nós 
+da rede colaboram na detecção do evento e na sua difusão para um servidor central, responsável pelas tomadas de decisões. Embora considere a mobilidade dos sensores, a solução é centralizada. \cite{boukerche2004fast} propuseram a difusão de eventos em WSN para oferecer rapidez, confiabilidade e tolerância à falhas no canal de comunicação. Trata-se de um protocolo para difusão de eventos através de rotas desde o sensor até o destinatário final, responsável pelas tomadas de decisões. Os nós vizinhos suportam uma rota dinâmica para a difusão dos eventos. \cite{souil2011qos} discutiram a qualidade de serviço na manuseio de múltiplos eventos diante da associação de sensores corporais sem fio às WSN. O trabalho oferece confiabilidade na detecção e encaminhamento de eventos. A análise e o tratamento acontecem após ordenamento e de maneira centralizada.
+
+%Redes PAN compostas por sensores corporais viabilizam disseminar eventos críticos através da Internet a um servidor remoto~\cite{blount2007remote}. 
+
+Em ~\cite{blount2007remote}, uma rede PAN composta por sensores corporais viabiliza disseminar eventos críticos através da Internet a um servidor remoto. Os sensores coletam os dados vitais das pessoas e enviam a um dispositivo hub para encaminhá-las a um servidor remoto. Essa solução provê confiabilidade na coleta dos eventos dos sensores, inclusive diante de falhas da rede. O conhecimento prévio dos dispositivos permite uma interação segura e inviabiliza seu emprego em redes dinâmicas. Contudo, os dispositivos dependem de uma infraestrutura de redes previamente estabelecida para disseminar os eventos, que são tratados de maneira centralizada em um dispositivo~remoto, fora da rede PAN. 
+%
+%No trabalho
+Em ~\cite{nittel2012localalert}, dispositivos agentes previamente conhecidos~coletam eventos emergenciais de saúde e os difundem por redes ad hoc. O destinatário final é~responsável pelas tomadas de decisões. Essas redes
+%ad hoc 
+proveem rotas para difusão dos eventos através dos dispositivos próximos e mantém uma infraestrutura de rede oportunística, servindo de alternativa às redes 
+comumente 
+existentes.
+Em nosso trabalho anterior~\cite{batista2019sbseg}, nós
+%temos proposto
+propusemos
+%o \mbox{STEALTH}, 
+um sistema para disseminação de dados pessoais sensíveis 
+%por meio de redes dinâmicas estabelecidas 
+em ambientes urbanos, focado em aspectos sociais e na segurança da entrega de dados, chamado \mbox{STEALTH}. Ele provê uma infraestrutura por meio de redes dinâmicas.  
+%de rede fora dos ambientes hospitalares e afins para disseminar eventos críticos de saúde. 
+Contudo,
+%ele 
+%não considera e 
+não trata a existência de eventos  
+%trata apenas eventos sequenciais e não concorrentes, e também não 
+%assume que os eventos ocorrem com pessoas específicas, desconsiderando a possibilidade de eventos 
+concorrentes e falhas na disseminação. 
+%, e  portanto ele não trata múltiplos eventos concorrentes e as falhas na sua disseminação. 
+
+Em~\cite{dar2015resource}, os autores propõem uma arquitetura para integração de dispositivos e centralização das decisões, via Internet, para IoT. Dispositivos coletam eventos de saúde de pessoas monitoradas e envia a uma entidade central remota para gerenciamento. Essa monitoração requer a uma infraestrutura de rede previamente estabelecida para seu funcionamento adequado. Além disso, por ocorrer de maneira remota, o tempo para as tomadas de decisões impacta o atendimento de saúde.
+
+
+\section{Coordenação de Múltiplos Eventos Críticos de Saúde}
+\label{sec:sistema}
+
+Esta seção apresenta uma visão geral do modelo de rede e dos componentes do sistema \mbox{C-STEALTH}, bem como o seu funcionamento. O sistema \mbox{C-STEALTH} trata múltiplos eventos (ex. queda do nível de insulina, alteração de batimentos cardíacos e alterações de pressão arterial) concorrentes de saúde, onde um evento influencia o tratamento de outro, permitindo aos %nós da rede 
+dispositivos tomar decisões
+%na presença de múltiplos eventos concorrentes. 
+nessas condições.
+O sistema também provê a coordenação de eventos que acontecem em momentos próximos, não simultâneos, o que impacta o seu atendimento.
+%O \mbox{C-STEALTH} é baseado no \mbox{STEALTH}~\cite{batista2019sbseg}, porém incorpora modificações na gestão de eventos para tratar múltiplos eventos concorrentes e as falhas na disseminação desses eventos decorrentes dessa concorrência. A gestão de redes locais permanece inalterada.
+Além disso, ele 
+lida com
+%trata 
+as falhas na disseminação desses eventos decorrentes dessa concorrência. 
+%Inicialmente é apresentado uma visão geral da rede onde \mbox{C-STEALTH} é executado, 
+
+\subsection{Visão Geral do Modelo de Rede} 
+\label{sec:models}
+
+O sistema \mbox{C-STEALTH} executa sobre um conjunto de dispositivos portáveis (nós) interligados numa rede de comunicação sem fio denotados por $D = \{d_1, d_2, d_3, ..., d_j\}$, onde $d_j \in D$. Esses nós possuem capacidade de processamento e de comunicação para agrupar nós e disseminar dados. Assume-se que cada nó possui um identificador único ($Id$), imutável no tempo, %a que o identifica ao longo do tempo, 
+e competência e interesses como atributos individuais de confiança. O conjunto de competências $S =  \{s_1, s_2, s_3, ..., s_k\}$, tal que $|S| \neq 0$, onde  uma competência $s_n$ representa uma habilidade, perícia ou conhecimento em uma determinada área de atuação, tal como médico, policial, enfermeiro, e outros. Assume-se, também, que cada nó esteja associado a %venha a ter 
+um conjunto de interesses $I_n = \{i_1, i_2, i_3, ..., i_z\}$, tal que $|I_n| \neq 0$ e $I_n \subset I$, onde $I$ é o conjunto de todos os interesses. Um interesse é um \textit{hobby}, gosto ou preferência definido
+%\mn{posso dizer: manualmente?} 
+manualmente
+pelo usuário do dispositivo, tal como música, saúde, entre outros. Os nós se agrupam por interesses em comum e formam comunidades por um dado período de tempo. \rev{Uma comunidade $C$ é representada por %um conjunto de 
+tuplas %distintas
+$\langle$nó, período, interesse$\rangle$, onde $C = \{\langle d_1,P_l,i_z\rangle, \langle d_2,P_l,i_z\rangle, ..., \langle d_n,P_l,i_z\rangle\}$ e $P_l=((t_{s0},t_{e0}),(t_{s1},t_{e1}),..., (t_{sl},t_{el})) $, com $t_{s*} \leq t_{e*}$\footnote{Definição adaptada do conceito de comunidades dinâmicas proposto por~\cite{coscia2011} e revisado por~\cite{rossetti2018community}}.}
+%\rev{A eficiência do uso dos interesses dos nós como critério para formação das comunidades está associado a sua similaridade, enquanto a competência somente será efetiva no âmbito interno de cada comunidade estabelecida.} 
+Um evento $E$ também é representado por uma tupla composta pelo
+%\mn{$\langle$identificador do nó [veja se está correto escrever assim]}, 
+$\langle$identificador do nó, instante, dados sensíveis$\rangle$, que será disseminado quando um nó entrar em situação emergencial. Por simplicidade, assume-se que os nós desconectados ou com falhas intermitentes não atuam na rede. Além disso, os nós conectados possuem comportamento honesto, sendo desconsiderada a ocorrência de ataques sobre o funcionamento do sistema. 
+
+
+O sistema \mbox{C-STEALTH} trata modelos de falhas esperadas na transmissão de dados sensíveis ao usuário destino que auxiliará na presença de eventos críticos de saúde,
+%\mn{tais como ??[completar com exemplos de eventos críticos]}. 
+tais como queda do nível de insulina, alteração de batimentos cardíacos e alterações de pressão arterial, entre outros.
+Assume-se a possibilidade de falhas na recepção e na confirmação da entrega dos dados, como mostra os cenários de rede social ilustrados na Figura~\ref{fig:modeloFalha}. Na falha de disseminação, o usuário destino não recebe os dados
+%. Isso é causado pela 
+devido a
+sua mobilidade ou por falhas no seu dispositivo, por exemplo. Nas falhas de confirmação, o usuário destino %destino 
+recebe os dados sensíveis, mas a confirmação não é recebida pelo transmissor
+%. Isso é causado pela 
+diante de sua
+mobilidade ou falha dos dispositivos, ou pelo usuário destino também se encontrar em situação emergencial. % também. 
+O sucesso na disseminação dos dados acontece quando o usuário destino recebe os dados sensíveis, e o transmissor recebe
+%recebe 
+a confirmação do recebimento.
+
+\begin{table}[!htb]
+\centering
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/falha_dissemina.pdf}
+	\end{minipage}
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/Falha_confirma.pdf}
+	\end{minipage}
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/Sucesso.pdf}
+	\end{minipage}
+	\vspace{-8.0pt}
+	\captionof{figure}{Robustez contra falhas na entrega de dados sensíveis}
+	\label{fig:modeloFalha}
+\end{table}
+
+\subsection{Arquitetura C-STEALTH}
+\label{sec:stealth}
+
+A arquitetura do sistema \mbox{C-STEALTH} é composta pelos módulos de $(i)$ {\bf Gestão de Comunidades} e de $(ii)$ {\bf Gestão de Eventos Críticos}%de dois módulos 
+, como ilustra a Figura~\ref{fig:ArquiteturaStealth}. O módulo Gestão de Comunidades %é responsável por 
+cria e atualiza as comunidades de interesse em saúde (CIS) estabelecidas ao longo do tempo a partir da interação entre os dispositivos das pessoas portadoras. O módulo Gestão de Eventos Críticos verifica e coordena a disseminação dos eventos críticos da pessoa em situação emergencial ao dispositivo da pessoa adequada.
+
+\begin{figure}[H]
+\hspace{-0.5cm}
+\includegraphics[width=1.05\textwidth]{figures/arquitetura_5.pdf}
+\vspace{-0.5cm}
+\caption{Arquitetura C-STEALTH}
+\label{fig:ArquiteturaStealth}
+\end{figure}
+
+\vspace{-1.0cm}
+
+\subsubsection{Módulo Gestão de Comunidades}
+
+Este módulo %é responsável por 
+verifica a vizinhança dos %dispositivos (
+nós, mantém as CISs, e %se 
+identifica %perante 
+outros nós vizinhos para participar de suas CISs. Ele é composto por %de 
+%diversos 
+componentes, que identificam a vizinhança de um nó e os agrupa em
+%comunidades de saúde
+CIS;
+medem a confiança dos nós e identificam aquele com a confiança mais elevada dentro de uma CIS; e coordenam a criação, extinção e modificação das CISs, a partir das informações de interação com os nós vizinhos. Assim, este módulo garante que as CISs acompanhem a evolução das redes locais estabelecidas ao longo do tempo para suportar a coordenação da disseminação de eventos críticos.
+
+Os nós %da rede 
+iniciam sua operação de forma isolada e, na medida em que se movimentam, encontram outros nós e estabelecem
+%comunidades de interesse
+CIS. Como descreve o Algoritmo~\ref{alg:coi}, cada nó inicia sua operação em condições normais (\textit{l}.3). Periodicamente, o nó inicializa sua lista de vizinhos (\textit{l}.5), anuncia sua posição por mensagens em \textit{broadcast} (\textit{l}.6) à procura de nós vizinhos e aguarda um intervalo de tempo até um novo anúncio (\textit{l}.7). Quando um nó vizinho percebe que um nó anuncia a sua posição (\textit{l}.10), ele encaminha a este nó anunciador uma mensagem com sua categoria social, informando sua competência e interesses (\textit{l}.13). O nó anunciador, ao receber essa mensagem do nó vizinho, verifica a existência de interesse em comum em saúde entre eles (\textit{l}.16). Quando há esse interesse,
+%em comum, 
+ele mede a confiança do nó vizinho (\textit{l}.17) e o insere na sua lista de vizinhos (\textit{l}.18), dentro da sua
+%comunidade de saúde
+CIS. Essa medição considera a confiança do nó vizinho sobre sua competência (\textit{l}.22) e os interesses em comum entre eles~(\textit{l}.23-25). 
+
+\begin{algorithm}[H]
+{
+{\fontsize{9}{11}
+\rev{\textbf{for each node $d \in D$ do}} \\
+\sep \textbf{procedure} \textsc{SearchNeighbors}$  (\;)$\\
+\sep \sep $emergency \leftarrow  False$ \\
+\sep \sep \textbf{while}\fontsize{9}{11} \selectfont{($True$)} \textbf{do}\\
+\sep \sep \sep $NeighborList \leftarrow 0$\\
+\sep \sep \sep $SendAnnounce(\;)$\\
+\sep \sep \sep $WaitInterval(\;)$\\
+\sep \sep \textbf{end while}\\
+\sep \textbf{end procedure}\\
+
+\BlankLine
+
+\sep \textbf{procedure} \textsc{ReceiveAnnounce}$  (\;)$ \\
+\sep \sep $neighskill \leftarrow GetSkill (\;)$ \\
+\sep \sep $neighinterest \leftarrow GetInterests (\;)$ \\
+\sep \sep $AnswerAnnounce(id,\;neighskill,\;neighinterest)$ \\
+\sep \textbf{end procedure} \\
+
+\BlankLine
+
+\sep \textbf{procedure} \textsc{ReceiveAnswer} $(id,\;neighskill,\;neighinterests)$ \\
+\rev{\sep \sep {\scriptsize \textbf{if} ($CommonInterests(\rev{neighinterests})$ AND $HealthInterest(\rev{neighinterests})$)}} \\
+\sep \sep \sep $neightrust \leftarrow EvaluateNeighborTrust (neighskill, \; neighinterests)$ \\
+\sep \sep \sep {\scriptsize $NeighborList \leftarrow RegisterNeighbor (id, \; neighskill, \; neighinterests, \; neightrust)$} \\
+\sep \sep \textbf{end if}\\
+\sep \textbf{end procedure}\\
+
+\BlankLine
+
+\sep \textbf{procedure} \textsc{EvaluateNeighborTrust} $(neighskill, \; neighinterests)$ \\
+\sep \sep $skilltrust \leftarrow GetSkillTrust (skill, SkillsTaxonomy)$ \\
+\sep \sep $numcommoninterests \leftarrow GetNumCommonInterests (interests)$ \\
+\sep \sep $numnodeinterests \leftarrow GetNumNodeInterests (\;)$ \\
+\sep \sep $intereststrust \leftarrow numcommoninterests \; / \; numnodeinterests$ \\
+\sep \sep \textbf{return}  $(skilltrust \; + \; intereststrust) \; / \; 2$ \\
+\sep \textbf{end procedure}\\
+\caption{Gestão de Comunidades}
+\label{alg:coi}
+}}
+\end{algorithm}
+
+\vspace{-0.6cm}
+
+\subsubsection{Módulo Gestão de Eventos Críticos}
+\vspace{-0.2cm}
+O componente \textit{Coordenação de Múltiplos Eventos} gerencia %coordena 
+as tomadas de decisões sobre os eventos críticos do nó e aqueles recebidos dos nós vizinhos. A coordenação é feita através de vários componentes. O componente \textit{Monitoração de Status} verifica a condição de saúde da pessoa ao receber seu status de saúde, encaminhando ao componente \textit{Coordenação de Múltiplos Eventos}. Um dispositivo médico, que a pessoa porta junto ao seu corpo, %é responsável por 
+identifica um evento crítico e informa ao sistema \mbox{C-STEALTH}. O componente \textit{Recepção de Dados Sensíveis} obtém os dados sensíveis da pessoa em situação emergencial, a partir de solicitação do componente \textit{Coordenação de Múltiplos Eventos}, que garante sua disseminação apenas nessas condições. O componente \textit{Receptor Apto} verifica a pessoa adequada para se disseminar os dados sensíveis, garantindo que seja aquela com a competência mais elevada em saúde e que não esteja em situação emergencial. O componente \textit{Disseminação de Eventos} dissemina os eventos críticos quando o componente \textit{Coordenação de Múltiplos Eventos} entrega os dados sensíveis e o identificador da pessoa adequada. Essa disseminação ocorre por mensagens de alerta de incidência às pessoas que pertençam à
+%comunidade de saúde 
+CIS
+do nó e na medida de sua competência em saúde. O componente \textit{Encaminhador de Atendimentos} envia mensagens sobre %informando 
+a interrupção da operação do nó quando recebe de um nó vizinho a confirmação do recebimento de seu evento crítico. Ele também confirma o recebimento de mensagens de alerta %recebidas
+dos nós vizinhos para
+%que possa 
+atendê-los.
+
+
+\begin{algorithm}[H]
+{
+\setstretch{0.8}
+{\fontsize{9}{11}
+\rev{\textbf{for each node $d \in D$ do}} \\ %Cormen page 486 and 532
+\sep \textbf{procedure} \textsc{HandleEmergencyEvent}$  (\;)$ \\
+\sep \sep $emergency \leftarrow  True$ \\
+\sep \sep $AckAlertReceived \leftarrow False$ \\
+\sep \sep \textbf{while}\fontsize{9}{11} \selectfont{($emergency$)} \textbf{do}\\
+\sep \sep \sep $neighid \leftarrow GetHigherScoreNeighbor (\;)$ \\
+\sep \sep \sep $neighskill \leftarrow GetNeighborSkill \; (neighid)$ \\
+\sep \sep \sep $criticaldata \leftarrow GetCriticalData \; (neighskill)$ \\ 
+\sep \sep \sep $SendAlert (neighid,\;criticaldata)$ \\
+\sep \sep \sep $WaitInterval(\;)$\\
+\sep \sep \sep {\textbf{if ($AckAlertReceived \;$ OR $\; |NeighborList| \; < \; 2$) then}}\\
+\sep \sep \sep \sep $SendStopAnnounce(id)$\\
+\sep \sep \sep \sep $StopOperation(\;)$\\
+\sep \sep \sep {\textbf{Else}}\\
+\sep \sep \sep \sep $NeighborList \leftarrow RemoveNeighbor(neighid)$\\
+\sep \sep \sep {\textbf{end if}}\\
+\sep \sep \textbf{end while}\\
+\sep \textbf{end procedure}\\
+\vspace{-0.01cm}
+
+\sep \textbf{procedure} \textsc{ReceiveAlert} ($id, \; criticaldata$) \\
+\sep \sep {\textbf{if ($emergency == False$) then}}\\
+\sep \sep \sep $SendAckAlert(id)$\\
+\sep \sep {\textbf{end if}}\\
+\sep \textbf{end procedure} \\
+
+\vspace{-0.01cm}
+
+\sep \textbf{procedure} \textsc{ReceiveAckAlert} ($id$) \\
+\sep \sep $AckAlertReceived \leftarrow True$ \\
+\sep \sep $SendStopAnnounce(id)$ \\
+\sep \sep $StopOperation(\;)$ \\
+\sep \textbf{end procedure} \\
+
+\vspace{-0.01cm}
+
+\sep \textbf{procedure} \textsc{ReceiveStopAnnouce} ($id$) \\
+\sep \sep $NeighborList \leftarrow RemoveNeighbor(id)$\\
+\sep \textbf{end procedure} \\
+\caption{Gestão de Eventos Críticos}
+\label{alg:emerg}
+}}
+\end{algorithm}
+
+
+Os nós pertencentes às
+%comunidades de saúde 
+CISs
+apoiam os nós que representam as pessoas em situação emergencial, como 
+descrito no Algoritmo~\ref{alg:emerg}. Quando várias pessoas encontram-se nessa situação, o tratamento dos eventos é coordenado por troca de mensagens para garantir que um número maior de nós seja atendido adequadamente. Ao ocorrer um evento crítico com um determinado nó (\textit{l}.3) e enquanto
+%perdurar a situação emergencial 
+não for atendido
+(\textit{l}.5), ele verifica o nó vizinho com a confiança mais elevada (\textit{l}.6) e obtém o dado sensível apropriado (\textit{l}.7-8). Em seguida, ele envia uma mensagem de alerta de incidência para o nó selecionado (\textit{l}.9) com seu dado sensível e aguarda um intervalo de tempo (\textit{l}.10). Ao receber a confirmação de recebimento da mensagem (\textit{l}.11), o nó anuncia por \textit{broadcast} a interrupção de sua operação (\textit{l}.12) e a encerra (\textit{l}.13). Caso contrário, ele remove o nó vizinho de lista de vizinhos (\textit{l}.15) e busca um novo vizinho para enviar a mensagem de alerta. Ao receber uma mensagem de alerta, se estiver operando em condições normais (\textit{l}.19), o nó confirma seu recebimento (\textit{l}.21). Ao receber a confirmação de recebimento de uma mensagem de alerta (\textit{l}.24), o nó anuncia (\textit{l}.26) e interrompe sua operação (\textit{l}.27). Quando um nó percebe que outro nó anuncia a interrupção de sua operação (\textit{l}.29), ele exclui esse nó da sua lista de vizinhos (\textit{l}.30), impedindo que ele seja selecionado para receber seus dados sensíveis.
+
+%\vspace{-0.5cm}
+\subsection{Funcionamento}
+
+%Nós ilustramos a 
+A
+operação do sistema \mbox{C-STEALTH} e
+%demonstramos 
+a coordenação da disseminação de dados sensíveis diante de múltiplos eventos concorrentes pode ser observada a seguir. Considere uma área urbana onde oito pessoas se deslocam a pé pelas ruas: um executivo, um piloto, um policial, um médico, um cuidador, uma enfermeira, um garçom e um advogado. Cada pessoa possui habilidade para executar
+%determinadas 
+tarefas no seu dia-a-dia e, eventualmente,
+%pode necessitar 
+necessita
+de atendimento emergencial.
+%Além disso, elas 
+%Elas
+As pessoas
+possuem um interesse em comum em saúde e não mantém relações entre si. A enfermeira, o policial, o cuidador e o médico possuem interesse em saúde por conta da sua profissão, e as demais pessoas se interessam por saúde para ajudar pessoas necessitadas. Todos portam um dispositivos móvel, \textit{smartphones}, para se conectarem em redes. O \mbox{C-STEALTH} roda nesses \textit{smartphones} e está configurado para operar. Essas pessoas %Elas também 
+portam um dispositivo junto ao corpo para verificar um sinal vital, ex. sua pressão arterial, %por exemplo, 
+e reportar a um aplicativo instalado em seu \textit{smartphone}. Esse aplicativo se comunica com o \mbox{C-STEALTH} para informar os valores medidos.
+
+
+\begin{table}[H]
+	\begin{minipage}[b]{0.5\linewidth}
+		\includegraphics[width=0.95\textwidth]{figures/interactions.pdf}
+		\captionof{figure}{Interações no tempo}
+		\label{fig:interacoesnotempo}
+	\end{minipage}
+	\begin{minipage}[b]{0.5\linewidth}
+		\centering
+		\includegraphics[width=.45\textwidth]{figures/g7.pdf}
+		\vspace{-0.2cm}
+		\captionof{figure}{Grafo da rede em $t_7$}
+	    \label{fig:grafo6}
+	\end{minipage}\hfill
+\end{table}
+
+\vspace{-0.5cm}
+
+A Figura~\ref{fig:interacoesnotempo} ilustra as interações entre pessoas ao longo do tempo $t = \{1,2,...,8\}$, resultantes da sua mobilidade, quando seus dispositivos estabelecem redes \textit{ad hoc} para trocarem dados entre si. Assume-se que o médico e a enfermeira entram em situação emergencial simultaneamente em $t_7$. Nesse instante, seus dispositivos interagem com os de outras pessoas, como ilustra o grafo $G_7$ (Figura~\ref{fig:grafo6}), e cada um deles forma sua própria
+%comunidade de saúde
+CIS. Os dispositivos do médico e da enfermeira medem a confiança dos demais e os inserem na sua respectiva lista de vizinhos. Diante do evento crítico, o \mbox{C-STEALTH} rodando no \textit{smartphone} do médico identifica a enfermeira como a pessoa com o maior valor de confiança na sua
+%comunidade de saúde
+CIS, enquanto a enfermeira identifica o médico na sua
+%comunidade
+CIS. Assim, eles disseminam seus dados sensíveis um para o outro. Esses múltiplos eventos são tratados individualmente por cada dispositivo. Os dispositivos do médico e da enfermeira não atendem ao evento recebido por se encontrarem em situação emergencial e não confirmam seu atendimento. Diante da ausência dessa confirmação, o dispositivo do médico exclui a enfermeira da sua CIS,
+%comunidade de saúde
+enquanto o da enfermeira exclui o médico da sua.
+%comunidade
+Em seguida, eles verificam novamente o vizinho que possui o maior valor confiança na sua 
+%comunidade
+CIS. Observando-se o $G_7$ (Figura~\ref{fig:grafo6}), constata-se que na
+%comunidade 
+CIS do médico é o policial, enquanto na da enfermeira é o cuidador. Logo, ambos disseminam seus dados sensíveis novamente para os vizinhos selecionados.
+
+%\vspace{-0.5cm}
+\section{Avaliação}
+\label{sec:aval}
+%\vspace{-0.5cm}
+
+Esta seção apresenta a metodologia de avaliação para análise do desempenho do sistema \mbox{C-STEALTH}. Ele foi implementado no simulador NS-3, versão 3.28, instalado no sistema operacional Debian, versão 9.1. O cenário de avaliação compreende 100 dispositivos (nós) móveis representando o comportamento de movimentação de usuários em um ambiente urbano. Esses usuários portam \textit{smartphones} e deslocam-se em uma área de 400m x 430m da Cidade de Estocolmo (Suécia) com velocidades entre 0,5m/s e 2,0m/s~\cite{helgason2014opportunistic}. Os nós estabelecem redes \textit{ad hoc} através de transmissão no padrão IEEE 802.11n e uso do protocolo UDP. Os nós têm raio de alcance de 50m, para
+%permitir a formação de
+formar
+%comunidades
+CIS com os nós próximos. Além disso, eles são configurados randomicamente com aspectos sociais, isto é, a cada rodada de simulação eles possuem uma única competência e um conjunto de interesses, com um mínimo de um e máximo de cinco. A Tabela~\ref{tab:aspectosAtribuidos} lista a distribuição desses aspectos. Uma análise comparativa entre o C-STEALTH e o STEALTH, um sistema para um sistema para disseminação de dados pessoais sensíveis em ambientes urbanos, focado em aspectos sociais e na segurança da entrega de dados~\cite{batista2019sbseg}.
+%\mn{[seria bom relembrar aqui o que é o STEALTH e a referência, para o caso do leitor desatento da seção 2 ou o leitor que veio direto pra esta seção.]} %também 
+é apresentada. % para mostrar sua eficiência. 
+Modificou-se a classe \textit{node} do NS-3 para o atendimento de múltiplos eventos. As instruções para executar a aplicação e seus códigos podem ser encontrados no GitHub\footnote{https://github.com/agnaldosb/c-stealth}.
+
+%\vspace{-0.2cm}
+
+\begin{comment}
+
+\begin{table}[H]
+\setlength{\extrarowheight}{2.0pt}
+\relsize{-2.0}
+\centering
+\caption{Distribuição dos aspectos sociais atribuídos aos nós}
+\vspace{-0.2cm}
+\label{tab:aspectosAtribuidos}
+\begin{tabular}{l|cccc|ccccc}
+\hlineB{2}
+\multirow{2}{*}{\textbf{Aspectos Sociais}} & \multicolumn{4}{c|}{\textbf{Competências}} & \multicolumn{5}{c}{\textbf{Interesses}} \\ \cline{2-10}
+&Médico&Enfermeiro&Cuidador&Outras&Saúde&Turismo&Música&Filmes&Livros \\ \hline
+\textbf{\# de Nós} &10&15&20&55&20&30&45&60&15 \\ 
+\hlineB{2}
+\end{tabular}
+\end{table}
+
+\end{comment}
+
+
+Os nós foram enumerados de 1 a 100 e a avaliação do comportamento do sistema \mbox{C-STEALTH} foi realizada através de seis deles - 30, 53, 70, 92, 95 e 98. Estes nós possuem a mesma configuração em todas as simulações realizadas, enquanto os demais
+%nós 
+são configurados randomicamente a cada rodada de simulação. O tempo de simulação é de 900s e os eventos críticos dos nós selecionados são agendados para os instantes apresentados na Tabela~\ref{tab:tEmerg}. Assume-se que todos os nós apresentam um comportamento honesto e há mecanismos de segurança para validação das suas identidades e proteção na transmissão dos dados. \rev{Assume-se, também, que a identificação de um evento crítico acontece por um dispositivo que as pessoas portam junto ao corpo e que informa ao sistema \mbox{C-STEALTH}.} Os resultados exibidos correspondem à média de 35 simulações e um intervalo de confiança de~95\%. As definições da métricas de avaliação de desempenho %do sistema \mbox{C-STEALTH} 
+encontram-se na Tabela~\ref{tab:metricas}. %onde 
+%As definições de $FR$ e $ADE$ %foram baseadas em
+%seguem~\cite{boukerche2004fast}. 
+A análise da disponibilidade das redes estabelecidas pelo sistema \mbox{C-STEALTH} considera a evolução das
+%comunidades de interesse em saúde 
+CIS
+ao longo do tempo e a métrica $N_{C}$. A análise da confiabilidade na coordenação e disseminação dos eventos críticos é mensurada pelas métricas $HR$, $FR$, $ANE$ e $ADE$.
+\vspace{-0.2cm}
+
+\begin{comment}
+
+\begin{table}[H]
+\centering
+\begin{threeparttable}
+\caption{Agendamento dos Eventos Críticos}
+\label{tab:tEmerg}
+{\footnotesize
+\begin{tabular}{l|ccc}
+\hlineB{2}
+\textbf{Nós} & 30 e 53 & 70 e 98 & 92 e 95 \bigstrut \\ \hline
+\textbf{Tempo (s)} & 360 & 300 & 350  \bigstrut \\ \hlineB{2}
+\end{tabular}}
+\end{threeparttable}
+\end{table}
+
+\end{comment}
+
+\begin{table}[H]
+	\begin{minipage}{0.55\linewidth}
+	    \begin{threeparttable}
+	    \caption{Distribuição dos aspectos sociais atribuídos}
+        %\vspace{-0.5cm}
+        \label{tab:aspectosAtribuidos}
+	    \relsize{-2.0}
+	    %\renewcommand*{\arraystretch}{1.4}
+        %\setlength{\extrarowheight}{2.0pt}
+        \centering
+        \begin{tabular}{l|cccc|ccccc}
+        \hlineB{2}
+        \textbf{Aspectos} & \multicolumn{4}{c|}{\textbf{Competências}} & \multicolumn{5}{c}{\textbf{Interesses}} \\ \cline{2-10}
+        \textbf{Sociais} &Méd & Enf &Cuid &Out &Saú &Tur &Mús &Fil &Liv \\ \hline
+        \textbf{\# de Nós} &10&15&20&55&20&30&45&60&15 \\ 
+        \hlineB{2}
+        \end{tabular}
+        \end{threeparttable}
+	\end{minipage}
+	\hspace{1.0cm}
+	\begin{minipage}{0.4\linewidth}
+	    \begin{threeparttable}
+	    \caption{Eventos agendados}
+        \vspace{2.0pt}
+        \label{tab:tEmerg}
+	    \relsize{-2.0}
+        \centering
+        \begin{tabular}{l|ccc}
+        \hlineB{2}
+        \textbf{Nós} & 30 e 53 & 70 e 98 & 92 e 95 \bigstrut \\ \hline
+        \textbf{Tempo (s)} & 360 & 300 & 350  \bigstrut \\ \hlineB{2}
+        \end{tabular}
+        \end{threeparttable}
+	\end{minipage}
+\end{table}
+
+\vspace{-0.5cm}
+
+\subsection{Análise de Disponibilidade}
+
+\begin{comment}
+
+\begin{wrapfigure}{r}{0.35\textwidth}
+\centering
+\includegraphics[width=.3\textwidth]{figures/mean_cois.png}
+\vspace{-0.3cm}
+\caption[Número médio de comunidades]
+{\tabular[t]{@{}l@{}}
+No. médio de \\ comunidades\endtabular}
+\label{fig:coiEstabelecidas}
+\end{wrapfigure}
+
+\end{comment}
+
+
+A análise da disponibilidade verifica a prontidão do \mbox{C-STEALTH} na coordenação dos múltiplos eventos críticos das pessoas em situação emergencial. Esse comportamento é observado através da
+%Figura~\ref{fig:coiEstabelecidas}, 
+Tabela~\ref{tab:coiEstabelecidas}, 
+que sumariza a quantidade média de
+%comunidades de saúde 
+CIS ($N_{C}$) estabelecidas, e na Figura~\ref{fig:coiEstabelecidas}. % ao longo do tempo. 
+O nó 53 obteve o melhor resultado e formou em média 8,65
+%comunidades 
+CISs, seguido do nó 92.
+%. Esse par foi seguido pelo par 92/95, que estabeleceu em média 6
+%comunidades 
+%CIS distintas. O par de 
+Os nós 70 e 98 estabeleceram a menor quantidade de
+%comunidades de saúde 
+CIS durante sua operação. Esse comportamento caracteriza a dinamicidade das redes locais estabelecidas pelo \mbox{C-STEALTH}, especialmente sua topologia. 
+%comunidades 
+Essas redes são estabelecidas enquanto os nós estão em operação. A sua mobilidade
+%desses nós 
+e seu tempo de operação, além dos aspectos sociais que lhes são atribuídos impactam diretamente a quantidade de CIS ($N_C$) estabelecidas. 
+%Dessa forma, 
+Assim, 
+como os nós 30 e 53 operaram durante 360s (Tabela~\ref{tab:tEmerg}), eles formaram mais
+%comunidades 
+CIS que os nós 70 e 98, que operaram por 300s. Por outro lado, o sistema STEALTH estabeleceu em média um número menor de comunidades que o C-STEALTH, apesar de ambos os sistemas gerenciarem as redes locais de forma idêntica. A diferença entre os $N_C$ se deve aos aspectos sociais atribuídos aos nós na sua inicialização, que acontece de forma randômica a cada rodada de simulação. 
+Um maior $N_C$ 
+%corresponde 
+indica uma maior disponibilidade da rede para suportar a disseminação de
+%seus 
+eventos críticos.
+
+\vspace{-0.2cm}
+
+\begin{table}[t]
+\renewcommand*{\arraystretch}{1.4}
+\relsize{-1.5}
+\centering
+\caption{Métricas de avaliação de desempenho}
+\vspace{-0.2cm}
+\label{tab:metricas}
+{ %\footnotesize
+\begin{tabular}{m{10cm}cm{4cm}}
+\hlineB{2}
+\textbf{Descrição} & \textbf{Equação} \\ \hline
+
+\textbf{\textit{Número Médio de Comunidades de Interesse em Saúde}} ($N_{C}$) computa a média do somatório de todas as 
+%comunidades de saúde 
+CIS formadas em cada execução $y$, conforme o total de possibilidades de mudanças ($t_s$) das
+%comunidades
+CIS, por um nó $x$ durante todas 
+\rev{as execuções ($N_S$).} & $N_{C} = \mathlarger{\sum}\limits_{x\;=\;1}^{N_S} \; \mathlarger{\sum}\limits_{y\;=\;1}^{t_s} \; \dfrac{ C_{xy}}{t_s \; \times \; N_S}$ \\
+
+\textbf{\textit{Taxa de Eventos Entregues}} ($HR$) indica a taxa de eventos que foram entregues com sucesso às pessoas adequadas, sendo a razão entre o total de eventos entregues com sucesso ($ED_{Sucess}$) e o total de eventos ocorridos ($E_{Disp}$). & $HR = \dfrac{ED_{Success}}{E_{Disp}} \times 100$ \\
+
+\textbf{\textit{Taxa de Erro na Entrega de Eventos}} ($FR$) indica a taxa de eventos não entregues às pessoas adequadas nas situações emergenciais~\cite{boukerche2004fast}. & $FR = 100 - HR$ \\ 
+
+\textbf{\textit{Número Médio de Disseminação dos Eventos}} ($ANE$) indica o número médio de vezes que um evento crítico de um nó foi disseminado ($N_D$) até que a confirmação de seu recebimento fosse recebida pelo nó em todas as simulações realizadas. Ele corresponde à razão do somatório dos $N_D$ e o \rev{total de execuções} ($N_S$). & $ANE = \mathlarger{\sum}\limits_{i\;=\;1}^{N_S} \; \dfrac{N_{D_i}}{N_S}$  \\
+
+\textbf{\textit{Atraso Médio na Entrega de Eventos}} ($ADE$) computa o tempo médio de entrega dos eventos de um determinado nó para todas as simulações realizadas~\cite{boukerche2004fast}. Ele corresponde ao somatório da razão entre as diferenças entre o momento em que os eventos foram recebidos ($t_r$) e o momento da sua disseminação ($t_d$), e o \rev{total de execuções} ($N_S$). & $ADE = \mathlarger{\sum}\limits_{i\;=\;1}^{N_S} \; \dfrac{ tr_i - td_i}{N_S}$ \\ \hlineB{2}
+
+\end{tabular}
+}
+\end{table}
+
+\vspace{-0.1cm}
+
+\begin{table}[H]
+	\begin{minipage}{0.4\linewidth}
+		\includegraphics[width=0.9\textwidth]{figures/mean_cois.png}
+		\vspace{-10.0pt}
+		\captionof{figure}{$N_C$ C-STEALTH}
+		\label{fig:coiEstabelecidas}
+		%\vspace{-10.0pt}
+		%\caption*{(b)}
+	\end{minipage}
+	%\vspace{-8.0pt}
+	%\captionof{figure}{Dinamicidade da CIS ao longo do tempo}
+	%\label{fig:cois_evolution}
+	\begin{minipage}{0.55\linewidth}
+	    \relsize{-2.0}
+	   \caption{Número de comunidades ($N_C$)}
+	   \vspace{-1.3cm}
+        \label{tab:coiEstabelecidas}
+	    \renewcommand*{\arraystretch}{1.4}
+        %\centering
+        \vspace{25.0pt}
+        \vspace{5.0pt}
+        \begin{tabular}{l|l|cc|cc|cc}
+        \hlineB{2}
+        \multicolumn{2}{l|}{\textbf{Métrica}} & \multicolumn{6}{c}{Número Médio de Comunidades ($N_C$)} \\ \hline
+        \multicolumn{2}{l|}{\textbf{Nós}} & \textbf{30} & \textbf{53} & \textbf{70} & \textbf{98} & \textbf{92} & \textbf{95} \\ \hline
+        \multirow{2}{*}{\textbf{Sistema}} & C-STEALTH & 5,51 & \textcolor{blue}{8,65} & 3,11 & \textcolor{blue}{3,05} & 6,48 & 6,02 \\ \cline{2-8} 
+                         & STEALTH & 4,06 & 7,80 & 2,74 & 2,74 & 7,54 & 5,20 \\ \hlineB{2}
+        \end{tabular}
+	\end{minipage}
+\end{table}
+
+\vspace{-0.4cm}
+
+\begin{comment}
+
+\begin{table}[H]
+\centering
+\caption{Número médio de comunidades}
+\label{tab:coiEstabelecidas}
+\begin{tabular}{l|l|cc|cc|cc}
+\hlineB{2}
+\multicolumn{2}{l|}{\textbf{Métrica}} & \multicolumn{6}{c}{Número Médio de Comunidades ($N_C$)} \\ \hline
+\multicolumn{2}{l|}{\textbf{Nós}} & \textbf{30} & \textbf{53} & \textbf{70} & \textbf{98} & \textbf{92} & \textbf{95} \\ \hline
+\multirow{2}{*}{\textbf{Sistema}} & C-STEALTH & 5,51 & \textcolor{blue}{8,65} & 3,11 & \textcolor{blue}{3,05} & 6,48 & 6,02 \\ \cline{2-8} 
+                         & STEALTH & 4,06 & 7,80 & 2,74 & 2,74 & 7,54 & 5,20 \\ \hlineB{2}
+\end{tabular}
+\end{table}
+
+\end{comment}
+
+A dinamicidade e o tamanho das CIS dos nós avaliados durante uma rodada específica de simulação são representadas na Figura~\ref{fig:cois_evolution}. Eles foram selecionados em pares - 30/53, 70/98 e 92/95 - para garantir que nos momentos dos eventos críticos um nó do par pertencesse à CIS do outro nó do par, e os eventos fossem disseminados pelo menos uma vez. Os nós 70, 98 (Figura~\ref{fig:cois_evolution}(b)), 92 e 95 (Figura~\ref{fig:cois_evolution}(c)) mantiveram CIS em 100\% do tempo de operação. Esse comportamento demonstra
+a disponibilidade
+%que as 
+das
+redes locais estabelecidas
+%estavam disponíveis 
+para suportar a disseminação dos eventos críticos, visto que nós vizinhos foram identificados com sucesso e incorporados as suas CIS. Os nós 30 e 53 (Figura~\ref{fig:cois_evolution}(a)) apresentaram um comportamento distinto. Enquanto o nó 30 estabeleceu CIS durante 72,53\% do seu tempo de operação, o nó 53 obteve um desempenho inferior, formando CIS em 55,22\% do tempo. Os nós 70 e 98 (Figura~\ref{fig:cois_evolution}(b)) estabeleceram quantidades de CIS idênticas ao longo do tempo. Analisando-se os \textit{logs} do sistema, observou-se que as CIS estabelecidas incorporavam os mesmos nós, indicando que nós 70 e 98 estiveram muito próximos durante todo o seu tempo de operação e percorreram caminhos semelhantes. Na medida em que as vizinhanças dos nós mudavam, ele atualizava suas CIS. Esses resultados mostram que o \mbox{C-STEALTH} acompanhou a dinamicidade das redes locais estabelecidas, especialmente diante da mobilidade dos nós. 
+
+\begin{figure}[H]
+\vspace{-0.2cm}
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/cois_evolution_30_53.png}
+		\vspace{-25.0pt}
+		%\caption*{(a)}
+	\end{minipage}
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/cois_evolution_70_98.png}
+		\vspace{-10.0pt}
+		%\caption*{(b)}
+	\end{minipage}
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/cois_evolution_92_95.png}
+		\vspace{-25.0pt}
+		%\caption*{(c)}
+	\end{minipage}
+	\vspace{-8.0pt}
+	\captionof{figure}{Dinamicidade da CIS ao longo do tempo}
+	\label{fig:cois_evolution}
+	\vspace{-0.5cm}
+\end{figure}
+
+
+\subsection{Análise de Confiabilidade}
+
+A análise da confiabilidade do \mbox{C-STEALTH} verifica sua capacidade em disseminar eventos críticos com sucesso na presença de eventos simultâneos de forma coordenada.
+%Isso é demonstrado através dos pares de nós selecionados - 30/53, 70/98 e 92/95. 
+A Tabela~\ref{tab:disseminaEventos2} sumariza os resultados da disseminação dos eventos.
+%ocorridos. 
+O nó 30 disseminou a maior quantidade de eventos, obtendo êxito ($HR$) em 97,14\% deles. O nó 53 apresentou um resultado próximo, 94,29\% de sucesso na disseminação de seus eventos. Esses resultados indicam que 
+%quando 
+diante
+%de seus 
+dos
+eventos críticos, esses nós identificaram vizinhos próximos para disseminarem os eventos. Esse desempenho relaciona-se com o agrupamento dos nós em CIS, visto que elas impactam diretamente a $HR$. As CIS suportam a disseminação dos dados sensíveis de um nó em situação emergencial apenas a um outro nó que pertença a elas. Os nós 70 e 98 obtiveram resultados idênticos e não foram bem-sucedidos ($FR$) na disseminação de 34,29\% dos eventos. Isso indica que em mais de 60\% dos eventos, o \mbox{C-STEALTH} não identificou pessoas aptas para recebê-los. O desempenho do STEALTH foi totalmente distinto, visto que não trata múltiplos eventos concorrentes. Logo, ele impediu que os nós avaliados fossem bem-sucedidos na disseminação dos seus eventos críticos na presença de múltiplos eventos concorrentes (HR = 0\%). 
+
+
+
+
+\begin{comment}
+\begin{table}[ht]
+\relsize{-1.0}
+\centering
+\caption{Disseminação dos eventos}
+\label{tab:disseminaEventos}
+\begin{tabular}{l|c|cc|cc|cc}
+\hlineB{2}
+\multicolumn{2}{l|}{\textbf{Nós}}      & \textbf{30} & \textbf{53} & \textbf{70} & \textbf{92} & \textbf{95} & \textbf{98} \\ \hline
+\multirow{3}{*}{\textbf{Métricas}} & \textbf{HR} &  97,14\%  &  94,29\%  &  65,71\%  &  71,43\%  &  74,29\%  &  65,71\%  \\ %\cline{2-8} 
+                          & \textbf{FR} &  12,86\%  &  15,71\%  &  34,29\%  &  28,57\%  &  25,71\%  &  34,29\%  \\ %\hline
+                          & \textbf{ADE} &  166ms  &  93ms  &  82ms  &  56ms  &  54ms  &  88ms  \\ \hlineB{2}                          
+\end{tabular}
+\end{table}
+
+\begin{wrapfigure}{r}{0.45\textwidth}
+\centering
+\includegraphics[width=.35\textwidth]{figures/tries_evolution.png}
+\vspace{-0.3cm}
+\caption[Número de disseminações]
+{\tabular[t]{@{}l@{}} Número de \\ disseminações \endtabular}
+\label{fig:tentativasD}
+\end{wrapfigure}
+\end{comment}
+
+A verificação da coordenação dos múltiplos eventos críticos
+%realizada pelo 
+do
+\mbox{C-STEALTH} apoia-se em
+%eventos críticos 
+situações emergenciais
+%de saúde
+simultâneas de
+%em 
+nós próximos fisicamente. 
+%que ocorreram simultaneamente. 
+Para assegurar essa situação, os nós avaliados foram escolhidos em pares, 
+%considerou nós próximos 
+%A avaliação do \mbox{C-STEALTH} considerou que, diante de múltiplos eventos concorrentes, 
+%onde
+para que
+um nó de a um par pertença à CIS do outro e vice-versa. Assim, eles selecionam um ao outro para disseminar seu evento crítico.
+%Esses eventos ocorreram simultaneamente, portanto sua disseminação seria bem-sucedida se os nós possuíssem CIS. 
+%A proximidade física entre os nós de um mesmo par garante que um pertença à CIS do outro.
+Os números de disseminações de eventos (ANE) são apresentadas na
+%Figura~\ref{fig:tentativasD}. 
+Tabela~\ref{tab:nDissemina}.
+Em 94\% das simulações, o nó 30 foi bem-sucedido ao disseminar seus eventos em uma segunda tentativa e em uma das simulações teve que enviar os dados uma terceira vez para ter sucesso na entrega do evento crítico, o que é ilustrado na Figura~\ref{fig:no30melhor}. Inicialmente, o nó 30 enviou seus dados sensíveis ao nó 53, seu par, que também se encontrava em situação emergencial. Assim, após excluí-lo de sua CIS, enviou os dados para o nó 88, que não confirmou seu recebimento. Finalmente, excluído o nó 88 de sua CIS, o nó 30 enviou seus dados sensíveis ao nó 47, que confirmou seu recebimento. No STEALTH, por outro lado, os nós disseminaram seus eventos uma única vez em cada rodada de simulação, como ilustra a Tabela~\ref{tab:nDissemina}. Por não tratar eventos concorrentes e não realizar uma coordenação para atendê-los, o STEALTH interrompe a entrega dos eventos após a primeira disseminação e não conclui esse processo.
+
+\vspace{-0.5cm}
+
+\begin{minipage}{0.5\linewidth}
+\begin{table}[H]
+\renewcommand*{\arraystretch}{1.1}
+\relsize{-1.5}
+%\centering
+%\caption{Disseminação \\ dos eventos}
+\begin{threeparttable}
+\caption{Disseminação eventos}
+%\vspace{10.0pt}
+\label{tab:disseminaEventos2}
+\begin{tabular}{l|c|c|c}
+\hlineB{2}
+\textbf{Sistema} & \textbf{Nós} & \multicolumn{1}{c|}{\textbf{HR}} & \multicolumn{1}{c}{\textbf{FR}} \bigstrut \\ \hline
+\multirow{6}{*}{\textbf{C-STEALTH}} & 30 & \textcolor{blue}{97,14\%}& 12,86\%\\ \cline{2-4} 
+                                    & 53 & 94,29\% & 15,71\% \\ \cline{2-4} 
+                                    & 70 & 65,71\% & 34,29\% \\ \cline{2-4} 
+                                    & 98 & 65,71\% & 34,29\% \\ \cline{2-4}  
+                                    & 92 & 71,43\% & 28,57\% \\ \cline{2-4} 
+                                    & 95 & 74,29\% & 25,71\% \\ \hline
+\textbf{STEALTH}                    & Todos & \textcolor{blue}{0\%} & \textcolor{blue}{100\%} \\ \hlineB{2}
+\end{tabular}
+\end{threeparttable}
+\end{table}
+\end{minipage}
+\hspace{0.2cm}
+\begin{minipage}{0.5\linewidth}
+\begin{table}[H]
+\relsize{-1.5}
+%\centering
+%\captionof{table}{Número de \\ disseminações}
+\begin{threeparttable}
+\captionof{table}{No. de disseminações}
+\label{tab:nDissemina}
+\begin{tabular}{l|c|c|c|c}
+\hlineB{2}
+\multirow{2}{*}{\textbf{Sistema}} & \multirow{2}{*}{\textbf{Nós}} & \multicolumn{3}{c}{\textbf{\# Simulações}} \\ \cline{3-5}
+                    & & \textbf{1} & \textbf{2} & \textbf{3} \\ \hline
+\multirow{6}{*}{\textbf{C-STEALTH}} & 30 & 1 & \textcolor{blue}{33} & \textcolor{blue}{1} \\ \cline{2-5} 
+                                    & 53 & 2 & 33 & 0 \\ \cline{2-5}
+                                    & 70 & 12 & 23 & 0 \\ \cline{2-5} 
+                                    & 98 & 12 & 23 & 0 \\ \cline{2-5}
+                                    & 92 & 10 & 35 & 0 \\ \cline{2-5} 
+                                    & 95 & 9 & 26 & 0 \\ \hline
+\textbf{STEALTH}                    & Todos & \textcolor{blue}{35} & 0 & 0 \\ \hlineB{2}
+\end{tabular}
+\end{threeparttable}
+\end{table}
+\end{minipage}
+
+% ----------------- COMENTADO ----------------------
+\begin{comment}
+\begin{minipage}{0.6\linewidth}
+%\begin{table}[H]
+\relsize{-2.0}
+\centering
+
+\begin{tabular}{l|c|cc|cc|cc|c}
+\hlineB{2}
+\multicolumn{2}{l|}{}      & \multicolumn{7}{c}{\textbf{\# Simulações}} \\ \hline
+\multicolumn{2}{l|}{\textbf{Sistema}}      & \multicolumn{6}{c|}{\textbf{C-STEALTH}} & \textbf{STEALTH} \\ \hline
+\multicolumn{2}{l|}{\textbf{Nós}}      & \textbf{30} & \textbf{53} & \textbf{70} & \textbf{98} & \textbf{92} & \textbf{95}  & \textbf{Todos} \\ \hline
+\multirow{3}{*}{\textbf{ANE}} & \textbf{1} &  1  &  2  &  12  & 12 &  10  &  9 & \textcolor{blue}{35} \\ %\cline{2-8} 
+                          & \textbf{2} &  \textcolor{blue}{33}  &  33  &  23  & 23 &  25  &  26 & 0  \\ %\hline
+                          & \textbf{3} &  \textcolor{blue}{1}  &  0  &  0  & 0 & 0  &  0 & 0   \\ \hlineB{2}                          
+\end{tabular}\hfill\
+%\end{table}
+\end{minipage}
+
+
+\begin{table}[H]
+\relsize{-1.0}
+\centering
+\caption{Disseminação dos eventos}
+\label{tab:disseminaEventos2}
+\begin{tabular}{l|c|cc|cc|cc|c}
+\hlineB{2}
+\multicolumn{2}{l|}{\textbf{Sistema}} & \multicolumn{6}{c|}{\textbf{C-STEALTH}} & \textbf{STEALTH} \\ \hline
+\multicolumn{2}{l|}{\textbf{Nós}}      & \textbf{30} & \textbf{53} & \textbf{70} & \textbf{98} & \textbf{92} & \textbf{95} & \textbf{Todos} \\ \hline
+\multirow{2}{*}{\textbf{Métricas}} & \textbf{HR} &  \textcolor{blue}{97,14\%}  &  94,29\%  &  65,71\%  & 65,71\%  &  71,43\%  &  74,29\% & \textcolor{blue}{0\%} \\ %\cline{2-8} 
+                          & \textbf{FR} &  12,86\%  &  15,71\%  &  34,29\% &  34,29\%  &  28,57\%  &  25,71\%  & \textcolor{blue}{100\%} \\ %\hline
+%                          & \textbf{ADE} &  166ms  &  93ms  &  82ms  &  56ms  &  54ms  &  88ms  \\ 
+                          \hlineB{2}                          
+\end{tabular}
+\end{table}
+\end{comment}
+
+
+
+\begin{comment}
+
+\begin{table}[H]
+\relsize{-1.0}
+\centering
+\begin{tabular}{l|c|cc|cc|cc}
+\hlineB{2}
+\multicolumn{2}{l|}{}      & \multicolumn{6}{c}{\textbf{\# Simulações}} \\ \cline{3-8}
+\multicolumn{2}{l|}{\textbf{Nós}}      & \textbf{30} & \textbf{53} & \textbf{70} & \textbf{98} & \textbf{92} & \textbf{95} \\ \hline
+\multirow{3}{*}{\textbf{ANE}} & \textbf{1} &  1  &  2  &  12  & 12 &  10  &  9  \\ %\cline{2-8} 
+                          & \textbf{2} &  33  &  33  &  23  & 23 &  25  &  26    \\ %\hline
+                          & \textbf{3} &  1  &  0  &  0  & 0 & 0  &  0    \\ \hlineB{2}                          
+\end{tabular}
+\caption{Número de disseminações}
+\label{tab:nDissemina}
+\end{table}
+
+
+\begin{table}[H]
+\relsize{-1.0}
+\centering
+\caption{Número de disseminações}
+\label{tab:nDissemina}
+\begin{tabular}{l|c|cc|cc|cc}
+\hlineB{2}
+\multicolumn{2}{l|}{}      & \multicolumn{6}{c}{\textbf{\# Simulações}} \\ \cline{3-8}
+\multicolumn{2}{l|}{\textbf{Nós}}      & \textbf{30} & \textbf{53} & \textbf{70} & \textbf{98} & \textbf{92} & \textbf{95} \\ \hline
+\multirow{3}{*}{\textbf{ANE}} & \textbf{1} &  1  &  2  &  12  & 12 &  10  &  9  \\ %\cline{2-8} 
+                          & \textbf{2} &  33  &  33  &  23  & 23 &  25  &  26    \\ %\hline
+                          & \textbf{3} &  1  &  0  &  0  & 0 & 0  &  0    \\ \hlineB{2}                          
+\end{tabular}
+\end{table}
+
+
+%\begin{figure}[!htb]
+%\centering
+	\begin{minipage}{0.49\linewidth}
+        \relsize{-1.0}
+        \centering
+        \captionof{table}{Dis. eventos}
+        \vspace{-7.0pt}
+        \label{tab:disseminaEventos}
+        {
+        {\small
+        \begin{tabular}{l|c|c|c}
+        \hlineB{2}
+        \multirow{2}{*}{\textbf{Nós}} & \multicolumn{3}{c}{\textbf{Métricas}} \\ \cline{2-4} 
+                     & \textbf{HR}       & \textbf{FR}      & \textbf{ADE}      \\ \hline
+        30                   & 97,14\%  & 12,86\% & 166ms    \\ 
+        53                   & 94,29\%  & 15,71\% & 93ms     \\ \hline
+        70                   & 65,71\%  & 34,29\% & 82ms     \\ 
+        92                   & 71,43\%  & 28,57\% & 56ms     \\ \hline
+        95                   & 74,29\%  & 25,71\% & 54ms     \\ 
+        98                   & 65,71\%  & 34,29\% & 88ms     \\ \hlineB{2}
+        \end{tabular}
+        }
+        } % fim tamanho
+	\end{minipage}
+	\hspace{-1cm}
+	\begin{minipage}{0.49\linewidth}
+	    \centering
+		\includegraphics[width=0.6\textwidth]{figures/total_tries.png}
+		\vspace{-8.0pt}
+		%\captionof{figure}{Número de disseminações}
+		\captionof{figure}{No. de disseminações}
+		\label{fig:tentativasD}
+	\end{minipage}
+%\end{figure}
+
+\end{comment}
+
+\vspace{-0.2cm}
+
+\begin{figure}[H]
+\centering
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/no30_1a_disseminacao_melhor.pdf}
+	\end{minipage}
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/no30_2a_disseminacao_melhor.pdf}
+	\end{minipage}
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/no30_3a_disseminacao_melhor.pdf}
+	\end{minipage}
+	\vspace{-4.0pt}
+	\captionof{figure}{Disseminação de dados sensíveis com sucesso}
+	\label{fig:no30melhor}
+\end{figure}
+
+\vspace{-0.5cm}
+
+As trocas de mensagens 
+%entre os nós 
+diante
+%quando 
+de um evento crítico suportam as tomadas de decisão sobre as suas disseminações. Em uma das rodadas de simulação, ilustrada na Figura~\ref{fig:no30pior}, o nó 30 não obteve sucesso na disseminação de seu evento crítico. Inicialmente, ele enviou os dados sensíveis ao nó 53, seu par, que também se encontrava em situação emergencial e não confirmou o recebimento dos dados. Assim, o nó 30 excluiu o nó 53 de sua CIS, que ficou vazia, impedindo a disseminação de seu evento crítico. Os múltiplos eventos concorrentes influenciam o seu atendimento, porém a coordenação 
+do
+%realizada pelo 
+\mbox{C-STEALTH} obteve sucesso na disseminação de 79,04\% de todos os eventos críticos dos nós avaliados.
+
+
+Múltiplos eventos concorrentes impactam a latência de entrega dos eventos (ADE), visto que demandam seu envio repetidamente, diante da impossibilidade de serem atendidos por nós que também estejam em situação emergencial. Essa latência caracteriza o custo 
+de
+%em relação ao 
+tempo para
+%que os 
+entrega dos
+eventos críticos disseminados
+%sejam entregues 
+à pessoa adequada. Além disso, a dinamicidade das redes locais estabelecidas influencia a composição das CIS,
+%ao mesmo tempo 
+enquanto
+que a mobilidade dos dispositivos altera a topologia da rede. Através da Tabela~\ref{tab:latencia} constata-se que a ADE do \mbox{STEALTH} não foi avaliada, visto que o sistema não foi bem-sucedido na disseminação dos eventos críticos. Por outro lado, em geral os eventos disseminados pelo \mbox{C-STEALTH} foram entregues com uma latência abaixo de 93ms, atendendo ao valor máximo de 125ms estabelecido pela IEEE para entrega de alertas médicos \cite{ieee2012}. Apenas o nó 33 teve um custo superior, ADE = 166ms, pois a maioria das suas disseminações de eventos foram confirmadas após uma segunda tentativa (Tabela~\ref{tab:nDissemina}). Esse custo se deve à coordenação para tratar dos eventos concorrentes e à mobilidade dos nós vizinhos. Em geral, o emprego das CISs contribuiu para o %na coordenação do 
+tratamento de múltiplos eventos simultâneos e reduziu o atraso na sua disseminação.
+
+\begin{table}[H]
+\caption{Latência na disseminação dos eventos}
+\vspace{-0.3cm}
+\label{tab:latencia}
+\relsize{-1.0}
+\centering
+\begin{tabular}{l|cc|cc|cc|c}
+\hlineB{2}
+\textbf{Sistema}  & \multicolumn{6}{c|}{\textbf{C-STEALTH}} & \textbf{STEALTH} \\ \hline
+\textbf{Nó}      & \textbf{30} & \textbf{53} & \textbf{70} & \textbf{98} & \textbf{92} & \textbf{95} & \textbf{Todos} \\ \hline
+\textbf{ADE} &  \textcolor{blue}{166ms}  &  93ms  &  82ms  &  88ms &  56ms  &  54ms  & -  \\ \hlineB{2}
+\end{tabular}
+\vspace{-0.5cm}
+\end{table}
+
+\vspace{-3.0pt}
+
+\begin{figure}[H]
+\centering
+	\vspace{-3.0pt}
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/no30_1a_disseminacao_pior.pdf}
+	\end{minipage}
+	\hspace{0.5cm}
+	%\vspace{-1.0pt}
+	\begin{minipage}[t]{0.32\linewidth}
+		\includegraphics[width=1\textwidth]{figures/no30_2a_disseminacao_pior.pdf}
+	\end{minipage}
+	%\vspace{-8.0pt}
+	\captionof{figure}{Falha na entrega de dados sensíveis}
+	\label{fig:no30pior}
+	\vspace{-0.7cm}
+\end{figure}
+
+%\vspace{-0.3cm}
+
+
+
+\begin{comment}
+\begin{table}[H]
+\relsize{-1.0}
+\centering
+\caption{Latência na disseminação dos eventos}
+\label{tab:latencia}
+\begin{tabular}{l|cc|cc|cc}
+\hlineB{2}
+\textbf{Nó}      & \textbf{30} & \textbf{53} & \textbf{70} & \textbf{98} & \textbf{92} & \textbf{95} \\ \hline
+\textbf{ADE} &  166ms  &  93ms  &  82ms  &  88ms &  56ms  &  54ms    \\ \hlineB{2}
+\end{tabular}
+\end{table}
+\end{comment}
+
+\section{Conclusão} 
+\label{sec:conc}
+
+Este trabalho apresentou \mbox{C-STEALTH}, um sistema para suportar o atendimento de múltiplos eventos críticos de saúde em redes locais dinâmicas sem fio. Ele estabelece agrupamentos virtuais apoiado em atributos sociais, a fim de permitir aos dispositivos coordenarem a disseminação de seus eventos críticos de forma robusta diante de situações emergenciais concorrentes. Simulações avaliaram a eficácia do \mbox{C-STEALTH} e os resultados demonstraram sua capacidade de coordenar a disseminação de dados sensíveis diante de múltiplos eventos concorrentes. O \mbox{C-STEALTH} obteve uma confiabilidade superior a 94\% disseminação dos dados e uma latência máxima de 166ms, além de uma disponibilidade da rede de até 100\% em alguns casos. Como trabalhos futuros, serão investigadas questões associadas à unicidade dos identificadores dos nós, à autenticação mútua e à confiabilidade do sistema na presença de comportamento malicioso, além da extração dos aspectos sociais dos usuários a partir de suas redes sociais.
+
+%\section*{Agradecimento}
+%Os autores agradecem o apoio do CNPq no projeto Universal No. 436649/2018-7.
+\vspace{-5.0pt}
+\small
+\bibliographystyle{sbc}
+\bibliography{sbc-template}
+
+\end{document}
+
